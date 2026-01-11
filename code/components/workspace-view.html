@@ -1,0 +1,66 @@
+<div class="workspace-header">
+    <div class="workspace-back-row">
+        <button class="btn-retro small back" onclick="closeWorkspace()">TOP画面に戻る</button>
+    </div>
+    <div class="workspace-tabs-container">
+        <button id="tab-info" class="ws-tab" onclick="switchWorkspaceTab('info')">作品情報</button>
+        <button id="tab-editor" class="ws-tab active" onclick="switchWorkspaceTab('editor')">エディター</button>
+        <button id="tab-memo" class="ws-tab" onclick="switchWorkspaceTab('memo')">メモ</button>
+    </div>
+</div>
+
+<div class="workspace-main">
+    <!-- Tab: Editor (2-Pane Layout) -->
+    <div id="ws-content-editor" class="workspace-tab-content active">
+        <div class="workspace-container">
+            <!-- Left Pane: Chapter List -->
+            <div class="editor-sidebar">
+                <div class="sidebar-header">
+                    <span class="gold">話一覧</span>
+                    <button class="btn-icon save" onclick="addNewChapter()">＋追加</button>
+                </div>
+                <div id="chapter-list"></div>
+            </div>
+
+            <!-- Right Pane: Editor Content -->
+            <div class="editor-main">
+                <div class="editor-toolbar">
+                    <button class="btn-icon back" onclick="toggleVerticalMode()">縦/横</button>
+                    <button class="btn-icon back" onclick="insertRuby()">ルビ(R)</button>
+                    <button class="btn-icon back" onclick="insertDash()">ダッシュ(D)</button>
+                    <button class="btn-icon save" onclick="saveCurrentChapter()">保存</button>
+                    <span id="editor-char-count">0 字</span>
+                </div>
+                <textarea id="main-editor" placeholder="物語を始めましょう..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab: Work Information -->
+    <div id="ws-content-info" class="workspace-tab-content">
+        <div id="ws-info-container" style="height:100%; overflow-y:auto; padding:20px;">
+        </div>
+    </div>
+
+    <!-- Tab: Memos -->
+    <div id="ws-content-memo" class="workspace-tab-content">
+        <div id="memo-view-list" class="memo-pane-container active-subview">
+            <div class="memo-actions-bar">
+                <button class="btn-memo-add" onclick="addNewMemo()">＋ 新しいメモを追加</button>
+            </div>
+            <div id="memo-list" class="memo-list-container"></div>
+        </div>
+        <div id="memo-view-edit" class="memo-edit-pane hidden">
+            <div class="memo-edit-header">
+                <button class="btn-retro small back" onclick="closeMemoEdit()">＜ 戻る</button>
+                <div class="memo-edit-actions">
+                    <button id="memo-delete-btn" class="btn-retro small delete"
+                        onclick="deleteMemoCurrent()">削除</button>
+                    <button class="btn-retro small save" onclick="saveMemoCurrent()">保存</button>
+                </div>
+            </div>
+            <input type="text" id="memo-title-input" class="msg-input" placeholder="タイトルを入力...">
+            <textarea id="memo-content-input" class="msg-input" placeholder="内容を入力..."></textarea>
+        </div>
+    </div>
+</div>
