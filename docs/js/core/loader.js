@@ -4,7 +4,9 @@
  */
 export async function loadComponent(targetId, filePath) {
     try {
-        const response = await fetch(filePath);
+        // Cache busting: Append timestamp
+        const url = `${filePath}?t=${new Date().getTime()}`;
+        const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`Component load failed: ${filePath} (Status: ${response.status})`);
         }

@@ -318,7 +318,7 @@ export async function toggleWorkInfoMode(mode) {
     if (!infoContainer || !infoView) return;
 
     // パネルを探す（テンプレート内または移動済みのコンテナ内）
-    const infoPanel = infoView.querySelector('.card-retro') || infoContainer.querySelector('.card-retro');
+    const infoPanel = infoView.querySelector('.info-view-wrapper') || infoContainer.querySelector('.info-view-wrapper');
 
     if (infoPanel) {
         // コンテナへ移動（まだ移動していない場合のみ）
@@ -337,6 +337,12 @@ export async function toggleWorkInfoMode(mode) {
         if (work) {
             // 第2引数にコンテナを渡し、名指しで描画させる
             renderWorkInfo(work, infoContainer);
+
+            // 編集ボタンのイベント設定（テンプレートの移動後に設定する必要がある）
+            const editBtn = infoContainer.querySelector('#info-edit-btn');
+            if (editBtn) {
+                editBtn.onclick = () => window.showWorkSetup(currentWorkId);
+            }
         }
     }
 }

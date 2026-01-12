@@ -189,21 +189,24 @@ export function renderWorkList(works, onOpen, onDelete, onPin, filter = 'all', s
         `;
 
         item.innerHTML = `
-            <div class="work-header">
-                <div style="flex:1;">
-                  <span class="work-title-link">${escapeHtml(work.title)}</span>
-                  <div style="margin-top:8px;">${tagsHtml}</div>
-                </div>
-                <div class="work-actions-inline" style="display:flex; align-items:center;">
-                    <button class="btn-retro edit" data-action="edit" style="padding:4px 12px; font-size:0.9rem;">編集</button>
-                    <button class="btn-retro delete" data-action="delete" style="padding:4px 12px; font-size:0.9rem;">削除</button>
-                    <button class="btn-icon star ${work.pinned ? 'active' : ''}" data-action="pin" title="お気に入り">${work.pinned ? '★' : '☆'}</button>
-                </div>
+            <div class="work-header" style="display:flex; justify-content:space-between; align-items:flex-start;">
+                <h3 class="work-title-link" style="margin:0; font-size:1.1rem; cursor:pointer;">${escapeHtml(work.title || "無題")}</h3>
+                <button class="btn-icon star ${work.pinned ? 'active' : ''}" data-action="pin" title="お気に入り">${work.pinned ? '★' : '☆'}</button>
             </div>
-            <p style="margin:10px 0; font-size:0.9rem; color:#ccc; font-weight:normal;">${escapeHtml(work.catchphrase || '')}</p>
-            <div class="work-footer-meta">
-                <span>作成日 : ${formatWorkDate(work.createdAt)}</span>
-                <span>更新日 : ${formatWorkDate(work.updatedAt, true)}</span>
+            
+            <div style="margin:8px 0;">${tagsHtml}</div>
+            
+            <p style="margin:5px 0 15px; font-size:0.9rem; color:#ccc; font-weight:normal;">${escapeHtml(work.catchphrase || '')}</p>
+            
+            <div class="work-footer-meta" style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:auto;">
+                <div style="font-size:0.8rem; color:#888;">
+                    <div>作成: ${formatWorkDate(work.createdAt)}</div>
+                    <div>更新: ${formatWorkDate(work.updatedAt, true)}</div>
+                </div>
+                <div class="work-actions-inline" style="display:flex; gap:8px;">
+                    <button class="btn-retro edit" data-action="edit" style="background:transparent; border:1px solid #fff; padding:4px 12px; font-size:0.8rem; color:#fff;">編集</button>
+                    <button class="btn-retro delete" data-action="delete" style="background:transparent; border:1px solid var(--clr-delete); color:var(--clr-delete); padding:4px 12px; font-size:0.8rem;">削除</button>
+                </div>
             </div>
         `;
 
