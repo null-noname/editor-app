@@ -188,6 +188,8 @@ export function renderWorkList(works, onOpen, onDelete, onPin, filter = 'all', s
     const container = document.getElementById('work-list');
     if (!container) return;
 
+    // Filter logic matches Plotter's db query if possible, but we filter purely on client side here
+    // Maintain filter support even if UI doesn't show it (for compatibility)
     let filtered = [...works];
     if (filter !== 'all') {
         filtered = filtered.filter(w => w.status === filter);
@@ -210,48 +212,55 @@ export function renderWorkList(works, onOpen, onDelete, onPin, filter = 'all', s
 
     filtered.forEach(work => {
         const item = document.createElement('div');
-        item.className = 'work-item-card';
+        // Match Plotter's class
+        item.className = 'work-card';
 
+        // Tags Logic
         const tagsHtml = `
             <span class="work-tag ${work.length === 'short' ? 'tag-short' : 'tag-long'}">${work.length === 'short' ? '短編' : '長編'}</span>
-            <span class="work-tag ${work.type === 'derivative' ? 'tag-derivative' : 'tag-original'}">${work.type === 'derivative' ? '二次創作' : 'オリジナル'}</span>
         `;
 
+        // Card HTML Structure (Plotter copy)
         item.innerHTML = `
-            <div class="work-header" style="display:flex; justify-content:space-between; align-items:flex-start;">
-                <h3 class="work-title-link" style="margin:0; font-size:1.1rem; cursor:pointer;">${escapeHtml(work.title || "無題")}</h3>
-                <button class="btn-icon star ${work.pinned ? 'active' : ''}" data-action="pin" title="お気に入り">${work.pinned ? '★' : '☆'}</button>
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                <h3 style="margin:0;">${escapeHtml(work.title || "無題")}</h3>
+                <button class="star-btn ${work.pinned ? 'active' : ''}" data-action="pin" title="お気に入り">${work.pinned ? '★' : '☆'}</button>
             </div>
-            
-            <div style="margin:8px 0;">${tagsHtml}</div>
-            
-            <p style="margin:5px 0 15px; font-size:0.9rem; color:#ccc; font-weight:normal;">${escapeHtml(work.catchphrase || '')}</p>
-            
-            <div class="work-footer-meta" style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:auto;">
-                <div style="font-size:0.8rem; color:#888;">
-                    <div>作成: ${formatWorkDate(work.createdAt)}</div>
-                    <div>更新: ${formatWorkDate(work.updatedAt, true)}</div>
+            <div style="margin:5px 0;">${tagsHtml}</div>
+            <div class="work-meta" style="display:flex; justify-content:space-between; align-items:flex-end; gap:2px; font-size:0.85rem; margin-top:auto; color:#666;">
+                <div style="display:flex; flex-direction:column; gap:4px;">
+                    <span>作成日: ${formatDate(work.createdAt)}</span>
+                    <span>更新日: ${formatDate(work.updatedAt, true)}</span>
                 </div>
-                <div class="work-actions-inline" style="display:flex; gap:8px;">
-                    <button class="btn-retro edit" data-action="edit" style="background:transparent; border:1px solid #fff; padding:4px 12px; font-size:0.8rem; color:#fff;">編集</button>
-                    <button class="btn-retro delete" data-action="delete" style="background:transparent; border:1px solid var(--clr-delete); color:var(--clr-delete); padding:4px 12px; font-size:0.8rem;">削除</button>
-                </div>
+                <button class="btn-retro edit-btn" data-action="edit" style="font-size:0.8rem; padding:4px 12px; background:transparent; color:#fff; border:1px solid #fff;">編集</button>
             </div>
         `;
 
-        // Direct binding for events
-        item.querySelector('.work-title-link').onclick = () => onOpen(work.id);
-        item.querySelector('[data-action="edit"]').onclick = () => {
-            if (onEdit) onEdit(work.id);
-            else if (window.showWorkSetup) window.showWorkSetup(work.id);
+        // Event Handling
+        // Card Click (Open)
+        item.onclick = (e) => {
+            if (e.target.closest('button')) return;
+            onOpen(work.id);
         };
-        item.querySelector('[data-action="delete"]').onclick = () => {
-            if (confirm("本当に削除しますか？")) onDelete(work.id);
-        };
-        item.querySelector('[data-action="pin"]').onclick = (e) => {
-            e.stopPropagation();
-            onPin(work.id, work.pinned);
-        };
+
+        // Pin Button
+        const starBtn = item.querySelector('[data-action="pin"]');
+        if (starBtn) {
+            starBtn.onclick = (e) => {
+                e.stopPropagation();
+                onPin(work.id, work.pinned);
+            };
+        }
+
+        // Edit Button
+        const editBtn = item.querySelector('[data-action="edit"]');
+        if (editBtn) {
+            editBtn.onclick = (e) => {
+                e.stopPropagation();
+                if (onEdit) onEdit(work.id);
+                else if (window.showWorkSetup) window.showWorkSetup(work.id);
+            };
+        }
 
         container.appendChild(item);
     });

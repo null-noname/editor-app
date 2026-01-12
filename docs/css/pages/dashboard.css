@@ -79,29 +79,45 @@
     transform: scale(0.98);
 }
 
-/* --- Work List --- */
-.work-item-card {
+/* --- Work List (Plotter Style) --- */
+.work-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.work-card {
     background: var(--bg-card);
-    border: 1px solid #444;
-    padding: 12px 18px;
-    margin-bottom: 12px;
-    border-radius: 15px;
-    transition: transform 0.2s;
+    border: none;
+    border-radius: 12px;
+    padding: 24px;
     cursor: pointer;
-    font-weight: bold;
-}
-
-.work-header {
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 6px;
+    flex-direction: column;
+    gap: 12px;
 }
 
-.work-title-link {
-    font-size: 1.2rem;
-    color: var(--text-stats);
-    cursor: pointer;
+.work-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+.work-card:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.work-card h3 {
+    font-size: 1.3rem;
+    color: #fff;
+}
+
+.work-card .work-meta {
+    font-size: 0.8rem;
+    color: var(--text-sub);
 }
 
 .work-tag {
@@ -111,24 +127,29 @@
     font-size: 0.75rem;
     margin-right: 5px;
     border-radius: 4px;
-    background: transparent;
+    background: rgba(255, 255, 255, 0.05);
+    font-weight: bold;
+    box-sizing: border-box;
 }
 
 .tag-long {
     color: #ff8c00;
+    border-color: #ff8c00;
 }
 
 .tag-short {
     color: #87ceeb;
+    border-color: #87ceeb;
 }
 
 .tag-original {
+    /* Legacy fallback */
     color: #ffffff;
 }
 
 .tag-derivative {
-    color: #000000;
-    border-color: #000000;
+    /* Legacy fallback */
+    color: #999;
 }
 
 .work-footer-meta {
