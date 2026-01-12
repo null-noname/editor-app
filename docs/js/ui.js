@@ -62,40 +62,69 @@ export function updateActiveTab(label) {
 /**
  * 作品詳細を表示（閲覧モード）
  */
+/**
+ * 作品詳細を表示（閲覧モード）- Plotter互換 (HTML生成方式)
+ */
 export function renderWorkInfo(work, container = document, prefix = "info-") {
-    const pf = prefix || "info-";
+    // Find the target container for dynamic content
+    const targetDiv = (container instanceof HTMLElement)
+        ? container.querySelector('#info-container')
+        : document.getElementById('info-container');
 
-    // スコープを絞って要素を探す（ID重複対策）
-    const find = (id) => container === document ? document.getElementById(id) : container.querySelector(`#${id}`);
+    if (!targetDiv) return;
 
-    const title = find(`${pf}title`);
-    const catchphrase = find(`${pf}catchphrase`);
-    const summary = find(`${pf}summary`) || find(`${pf}description`);
-    const length = find(`${pf}length`);
-    const status = find(`${pf}status`);
-    const type = find(`${pf}type`);
-    const ai = find(`${pf}ai`);
-    const rating = find(`${pf}rating`);
+    // Logic from Plotter's renderWorkView
+    const ratingLabels = {
+        sexual: "性描写",
+        violent: "暴力",
+        cruel: "残酷"
+    };
+    const activeRatings = (work.rating || []).map(r => ratingLabels[r] || r).join('/');
 
-    const statusLabels = { 'in-progress': '制作中', 'completed': '完了', 'suspended': '中断' };
-    const typeLabels = { 'original': 'オリジナル', 'derivative': '二次創作' };
-    const aiLabels = { 'none': 'なし', 'assist': '補助', 'partial': '一部', 'main': '本文' };
-    const lengthLabels = { 'long': '長編', 'short': '短編' };
-    const ratingLabels = { 'sexual': '性描写', 'violent': '暴力', 'cruel': '残酷' };
+    const statusLabels = {
+        "in-progress": "制作中",
+        "completed": "完了",
+        "suspended": "中断"
+    };
+    const statusLabel = statusLabels[work.status] || "未設定";
 
-    if (title) title.textContent = work.title || '無題';
-    if (catchphrase) catchphrase.textContent = work.catchphrase || '（未設定）';
-    if (summary) summary.textContent = work.description || '（未設定）';
+    const aiLabels = {
+        "none": "なし",
+        "assist": "補助",
+        "partial": "一部",
+        "main": "本文"
+    };
+    const aiLabel = aiLabels[work.ai] || "なし";
 
-    if (length) length.textContent = lengthLabels[work.length] || work.length || '（未設定）';
-    if (status) status.textContent = statusLabels[work.status] || work.status || '（未設定）';
-    if (type) type.textContent = typeLabels[work.type] || work.type || '（未設定）';
-    if (ai) ai.textContent = aiLabels[work.ai] || work.ai || '（未設定）';
+    // Note: Plotter uses check for 'derivative', defaults to 'original'
+    const typeLabel = (work.type === 'derivative') ? '二次創作' : 'オリジナル';
 
-    if (rating) {
-        const items = (work.rating || []).map(r => ratingLabels[r] || r);
-        rating.textContent = items.length > 0 ? items.join(' / ') : 'なし';
-    }
+    // Note: Plotter uses check for 'short', defaults to 'long'
+    const lengthLabel = (work.length === 'short') ? '短編' : '長編';
+
+    targetDiv.innerHTML = `
+        <div class="card-retro">
+            <h3 style="color:#fff; font-size:1.6rem; margin-bottom:10px;">${escapeHtml(work.title || "無題")}</h3>
+            
+            <div class="work-meta-compact">
+                <div class="work-meta-group">
+                    <span class="meta-item"><span class="gold-bold" style="display:inline;">状態：</span>${statusLabel}</span>
+                    <span class="meta-item"><span class="gold-bold" style="display:inline;">種別：</span>${typeLabel}</span>
+                </div>
+                <div class="work-meta-group">
+                    <span class="meta-item"><span class="gold-bold" style="display:inline;">長さ：</span>${lengthLabel}</span>
+                    <span class="meta-item"><span class="gold-bold" style="display:inline;">AI利用：</span>${aiLabel}</span>
+                </div>
+                ${activeRatings ? '<div class="work-meta-group"><span class="meta-item"><span class="gold-bold" style="display:inline;">レーティング：</span>' + activeRatings + '</span></div>' : ''}
+            </div>
+
+            <label class="gold-bold" style="font-size:0.8rem; opacity:0.7; margin-bottom:2px;">キャッチコピー</label>
+            <div style="color:#fff; margin-bottom:15px; font-size:1.1rem;">${escapeHtml(work.catchphrase || "（未設定）")}</div>
+            
+            <label class="gold-bold" style="font-size:0.8rem; opacity:0.7; margin-bottom:2px;">あらすじ</label>
+            <div style="color:#fff; white-space:pre-wrap; line-height:1.7; font-size:1.1rem; margin-bottom:20px;">${escapeHtml(work.description || "あらすじ未入力")}</div>
+        </div>
+    `;
 }
 
 /**
