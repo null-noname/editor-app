@@ -1,6 +1,7 @@
 <div class="info-view-wrapper">
     <!-- Header Area: Match Plotter's Tab Header -->
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid #333; padding-bottom:10px;">
+    <div
+        style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid #333; padding-bottom:10px;">
         <h2 class="retro-subtitle" style="margin:0;">作品情報</h2>
         <button id="info-edit-btn" class="btn-retro blue" style="padding:4px 16px; font-size:0.8rem;">編集</button>
     </div>
@@ -9,14 +10,16 @@
     <div class="card-retro">
         <h3 id="info-title" style="color:#fff; font-size:1.6rem; margin-bottom:10px;"></h3>
 
-        <div class="work-meta-compact" style="margin-bottom:20px; display:flex; flex-direction:column; gap:10px;">
-            <div class="work-meta-group" style="display:flex; gap:20px; flex-wrap:wrap;">
+        <div class="work-meta-compact" style="margin-bottom:20px;">
+            <div class="work-meta-group">
                 <span class="meta-item"><span class="gold-bold">状態：</span><span id="info-status"></span></span>
                 <span class="meta-item"><span class="gold-bold">種別：</span><span id="info-type"></span></span>
-                <span class="meta-item"><span class="gold-bold">長さ：</span><span id="info-length"></span></span>
             </div>
-            <div class="work-meta-group" style="display:flex; gap:20px; flex-wrap:wrap;">
+            <div class="work-meta-group">
+                <span class="meta-item"><span class="gold-bold">長さ：</span><span id="info-length"></span></span>
                 <span class="meta-item"><span class="gold-bold">AI利用：</span><span id="info-ai"></span></span>
+            </div>
+            <div class="work-meta-group">
                 <span class="meta-item"><span class="gold-bold">レーティング：</span><span id="info-rating"></span></span>
             </div>
         </div>
