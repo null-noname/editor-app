@@ -32,12 +32,24 @@
 .form-group input,
 .form-group textarea,
 .form-group select {
-    background: var(--bg-input);
-    border: 1px solid #444;
+    width: 100%;
+    padding: 10px 12px;
+    background: #1a1a1a;
+    border: none;
+    /* Plotter Style: No border */
+    border-radius: 8px;
+    /* Plotter Style: 8px */
     color: #fff;
-    padding: 10px 15px;
+    font-size: 1rem;
+    box-sizing: border-box;
     font-family: var(--font-ui);
-    border-radius: 12px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: 2px solid var(--clr-save);
+    background: #222;
 }
 
 .form-row-multi {

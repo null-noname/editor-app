@@ -16,23 +16,29 @@
     flex: 1 1 auto;
     min-width: 0;
     background: var(--bg-card);
-    border: 1px solid #444;
-    padding: 20px;
-    border-radius: 15px;
+    border: none;
+    /* Plotter Style */
+    padding: 24px;
+    /* Match .card-retro */
+    border-radius: 12px;
     cursor: pointer;
-    transition: transform 0.2s, background 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    /* Match .card-retro */
 }
 
 .stats-card:hover {
-    background: #333;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
 }
 
 .stats-card h3 {
     font-size: 1rem;
     margin-bottom: 8px;
+    color: var(--text-stats);
 }
 
 .action-stack {
@@ -44,7 +50,8 @@
 
 /* 「＋作品作成」の独立したカード枠 */
 .create-card {
-    background: var(--btn-back);
+    background: var(--clr-back);
+    /* Fix missing variable */
     border: none;
     padding: 8px 16px;
     border-radius: 12px;
@@ -57,18 +64,18 @@
 
 .create-card h3 {
     font-size: 1.2rem;
-    color: #222;
+    color: #fff;
+    /* Fix visibility on dark background */
     margin: 0;
     font-weight: bold;
     font-family: var(--font-ui);
 }
 
 .create-card:hover {
-    background: #bbb;
+    filter: brightness(1.2);
 }
 
 .create-card:active {
-    background: #aaa;
     transform: scale(0.98);
 }
 

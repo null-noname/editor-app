@@ -4,19 +4,27 @@
  */
 
 :root {
+    /* Plotter Color Palette */
     --bg-dark: #121212;
     --bg-card: #1e1e1e;
     --bg-input: #1a1a1a;
     --text-main: #ffffff;
     --text-sub: #aaaaaa;
+
+    /* Specified Colors (Dark Mode Optimized) */
+    --clr-save: #2e7d32;
+    --clr-delete: #722f37;
+    --clr-add: #689f38;
+    --clr-edit: #1565c0;
+    --clr-sort: #cccccc;
+    --clr-sort-text: #000;
+    --clr-back: #424242;
+    
+    /* Legacy/Editor Specific (Kept for compatibility) */
     --gold: #d4af37;
     --bright-green: #00ff7f;
-
-    /* Buttons */
-    --btn-save: #2e7d32;
-    --btn-edit: #1565c0;
-    --text-stats: #c0c0c0;
     --val-green: #3CB371;
+    --text-stats: #c0c0c0;
 
     --font-ui: "Inter", "Segoe UI", sans-serif;
     --font-editor: "Sawarabi Mincho", serif;
@@ -37,7 +45,7 @@ body {
     margin: 0;
 }
 
-/* Hide scrollbars completely (Plotter Sync) */
+/* Hide scrollbars completely (Matches Plotter) */
 ::-webkit-scrollbar {
     width: 0px;
     background: transparent;
