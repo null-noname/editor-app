@@ -19,7 +19,7 @@
     --clr-sort: #cccccc;
     --clr-sort-text: #000;
     --clr-back: #424242;
-    
+
     /* Legacy/Editor Specific (Kept for compatibility) */
     --gold: #d4af37;
     --bright-green: #00ff7f;
@@ -132,8 +132,10 @@ body {
 }
 
 .gold-bold {
-    color: var(--gold);
     font-weight: bold;
+    color: #fff;
+    margin-bottom: 5px;
+    display: block;
 }
 
 .view-container {
