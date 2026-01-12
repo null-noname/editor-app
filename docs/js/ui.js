@@ -229,8 +229,8 @@ export function renderWorkList(works, onOpen, onDelete, onPin, filter = 'all', s
             <div style="margin:5px 0;">${tagsHtml}</div>
             <div class="work-meta" style="display:flex; justify-content:space-between; align-items:flex-end; gap:2px; font-size:0.85rem; margin-top:auto; color:#666;">
                 <div style="display:flex; flex-direction:column; gap:4px;">
-                    <span>作成日: ${formatDate(work.createdAt)}</span>
-                    <span>更新日: ${formatDate(work.updatedAt, true)}</span>
+                    <span>作成日: ${formatWorkDate(work.createdAt)}</span>
+                    <span>更新日: ${formatWorkDate(work.updatedAt, true)}</span>
                 </div>
                 <button class="btn-retro edit-btn" data-action="edit" style="font-size:0.8rem; padding:4px 12px; background:transparent; color:#fff; border:1px solid #fff;">編集</button>
             </div>
