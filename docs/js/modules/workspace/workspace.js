@@ -339,10 +339,10 @@ export async function toggleWorkInfoMode(mode) {
             renderWorkInfo(work, infoContainer);
 
             // 編集ボタンのイベント設定（テンプレートの移動後に設定する必要がある）
-            const editBtn = infoContainer.querySelector('#info-edit-btn');
-            if (editBtn) {
-                editBtn.onclick = () => window.showWorkSetup(currentWorkId);
-            }
+            // const editBtn = infoContainer.querySelector('#info-edit-btn');
+            // if (editBtn) {
+            //     editBtn.onclick = () => window.showWorkSetup(currentWorkId);
+            // }
         }
     }
 }
