@@ -15,38 +15,44 @@
     --clr-sort-text: #000;
     /* Black */
     --clr-back: #424242;
-    --val-green: #2e7d32; /* Alias for input focus */
+    --val-green: #2e7d32;
+    /* Alias for input focus */
 }
 
 /* --- Tab System (Override) --- */
 .workspace-tabs-container {
     background: #1a1a1a;
-    border-bottom: 2px solid #000; /* Match Plotter */
+    border-bottom: 2px solid #000;
+    /* Match Plotter */
 }
 
 .ws-tab {
     color: #888;
     background: transparent;
-    border-bottom: 4px solid transparent; /* Match Plotter thickness */
+    border-bottom: 4px solid transparent;
+    /* Match Plotter thickness */
 }
 
 .ws-tab.active {
     color: #fff;
     background: #222;
-    border-bottom-color: var(--clr-save); /* Green border */
+    border-bottom-color: var(--clr-save);
+    /* Green border */
 }
 
 /* --- Memo Views & Components (Copied from Plotter) --- */
 
 .memo-pane-container {
-    padding: 16px; /* Match Plotter tab-content spacing */
+    padding: 16px;
+    /* Match Plotter tab-content spacing */
     max-width: 900px;
     margin: 0 auto;
     width: 100%;
 }
 
 .retro-subtitle {
-    color: var(--clr-save); /* Green */
+    color: var(--clr-save);
+    /* Green */
     font-weight: bold;
     font-size: 1.2rem;
     margin-bottom: 10px;
@@ -54,17 +60,21 @@
 
 /* Buttons */
 .btn-memo-add {
-    background: var(--clr-add); /* Green */
+    background: var(--clr-add);
+    /* Green */
     color: #fff;
     border: none;
     padding: 10px 20px;
-    border-radius: 8px; /* Match btn-retro */
+    border-radius: 8px;
+    /* Match btn-retro */
     cursor: pointer;
     font-weight: bold;
     font-size: 0.9rem;
     display: inline-block;
-    min-width: unset; /* Reset editor default */
-    flex: unset; /* Reset editor default */
+    min-width: unset;
+    /* Reset editor default */
+    flex: unset;
+    /* Reset editor default */
 }
 
 .btn-memo-add:hover {
@@ -79,17 +89,20 @@
     font-size: 0.8rem;
     font-weight: bold;
     background: transparent;
-    border-radius: 4px; /* Ensure rounded */
+    border-radius: 4px;
+    /* Ensure rounded */
     color: #ccc;
     cursor: pointer;
 }
 
 /* Collapsible Memo Cards */
 .card-retro {
-    background: #1e1e1e; /* Match --bg-card */
+    background: #1e1e1e;
+    /* Match --bg-card */
     border: none;
     border-radius: 12px;
-    padding: 0; /* Reset internal padding for collapsible structure */
+    padding: 0;
+    /* Reset internal padding for collapsible structure */
     margin-bottom: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
@@ -110,7 +123,8 @@
     align-items: center;
     cursor: pointer;
     user-select: none;
-    border-bottom: 1px solid #333; /* Separator */
+    border-bottom: 1px solid #333;
+    /* Separator */
 }
 
 .collapsible-header:hover {
@@ -134,25 +148,36 @@
     line-height: 1.6;
 }
 
-.collapsible-container.collapsed .collapsible-content {
-    /* Plotter hides content but shows summary in summary-mode */
-     /* In Editor's JS, we toggle display manually or via class. 
-        Plotter CSS: .collapsed .collapsible-content { display: none; } 
-        BUT .collapsed .collapsible-content.summary-mode { display: block; } 
-     */
+/* Line Clamping for Summary View */
+.line-clamp-5 {
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Plotter Style fix: ensure height is contained */
 }
 
 /* Specific adjustment for collapsed state logic to match JS */
 .collapsible-container.collapsed .collapsible-content:not(.summary-mode) {
     display: none;
 }
+
+/* When collapsed, SHOW summary mode content */
+.collapsible-container.collapsed .collapsible-content.summary-mode {
+    display: block;
+}
+
 .collapsible-container:not(.collapsed) .collapsible-content.summary-mode {
     display: none;
 }
 
 /* Input Focus Colors */
-input:focus, textarea:focus {
-    outline: 2px solid var(--clr-save); /* Green focus */
+input:focus,
+textarea:focus {
+    outline: 2px solid var(--clr-save);
+    /* Green focus */
     background: #222;
 }
 
@@ -164,7 +189,8 @@ input:focus, textarea:focus {
     width: 100%;
 }
 
-.input-retro, .textarea-retro {
+.input-retro,
+.textarea-retro {
     background: #1a1a1a;
     border: none;
     border-radius: 8px;
@@ -172,7 +198,8 @@ input:focus, textarea:focus {
     padding: 10px 12px;
 }
 
-.input-retro:focus, .textarea-retro:focus {
+.input-retro:focus,
+.textarea-retro:focus {
     outline: 2px solid var(--clr-save);
     background: #222;
 }
