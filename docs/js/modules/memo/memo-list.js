@@ -145,31 +145,30 @@ function renderMemoCards() {
 function createMemoCard(memo) {
     const card = document.createElement('div');
     card.className = 'collapsible-container collapsed card-retro';
-    card.style.padding = "0";
-    card.style.marginBottom = "15px";
+    // Styles moved to CSS (workspace.css)
 
     const getSummaryHtml = () => {
         return `
-            <div class="line-clamp-5" style="color:#ddd; font-size:0.95rem; margin-bottom:8px;">${escapeHtml(memo.content || "") || "内容なし"}</div>
-            <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                ${(memo.tags || []).map(t => `<span class="tag" style="color:#888; border-color:#444; font-size:0.7rem;">${escapeHtml(t)}</span>`).join('')}
+            <div class="line-clamp-5">${escapeHtml(memo.content || "") || "内容なし"}</div>
+            <div class="memo-tags-list">
+                ${(memo.tags || []).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('')}
             </div>
         `;
     };
 
     card.innerHTML = `
-        <div class="collapsible-header" style="padding: 12px; display:flex; justify-content:space-between; align-items:center; background: #1a1a1a; border-radius: 8px 8px 0 0; min-height:50px;">
-            <div class="header-click-area" style="flex:1; cursor:pointer; display:flex; align-items:center; gap:8px; min-width:0;">
-                <h3 style="font-size:1.1rem; color:#fff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1; margin:0;">${escapeHtml(memo.title || "無題")}</h3>
+        <div class="collapsible-header">
+            <div class="header-click-area">
+                <h3>${escapeHtml(memo.title || "無題")}</h3>
             </div>
-            <div style="display:flex; align-items:center; gap:8px; margin-left:12px;">
-                <button class="btn-retro btn-delete" style="background:var(--clr-delete); font-size:0.75rem; padding:4px 8px; border-radius:4px;">削除</button>
-                <button class="btn-retro btn-edit blue" style="font-size:0.75rem; padding:4px 8px; border-radius:4px;">編集</button>
-                <button class="btn-sort btn-up" style="padding:4px 8px;">▲</button>
-                <span class="toggle-icon gold-bold" style="width:24px; font-size:1.2rem; display:flex; justify-content:center; align-items:center; cursor:pointer; color:var(--clr-save);">＋</span>
+            <div class="header-actions">
+                <button class="btn-retro btn-delete">削除</button>
+                <button class="btn-retro btn-edit blue">編集</button>
+                <button class="btn-sort btn-up">▲</button>
+                <span class="toggle-icon">＋</span>
             </div>
         </div>
-        <div class="collapsible-content summary-mode" style="padding: 12px; background: #0a0a0a; border-radius: 0 0 8px 8px; cursor:pointer; border-top:1px solid #222;">
+        <div class="collapsible-content summary-mode">
             ${getSummaryHtml()}
         </div>
     `;
@@ -190,9 +189,9 @@ function createMemoCard(memo) {
         } else {
             content.classList.remove('summary-mode');
             content.innerHTML = `
-                <div style="color:#eee; white-space:pre-wrap; font-size:1.05rem; line-height:1.6; margin-bottom:12px;">${escapeHtml(memo.content || "")}</div>
-                <div style="display:flex; gap:6px; flex-wrap:wrap; padding-top:10px; border-top:1px solid #222;">
-                    ${(memo.tags || []).map(t => `<span class="tag" style="background:#333; color:#fff; font-size:0.75rem;">${escapeHtml(t)}</span>`).join('')}
+                <div class="memo-content-full">${escapeHtml(memo.content || "")}</div>
+                <div class="memo-tags-list extended">
+                    ${(memo.tags || []).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('')}
                 </div>
             `;
         }
