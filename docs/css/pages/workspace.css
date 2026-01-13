@@ -141,7 +141,7 @@
 }
 
 .collapsible-content {
-    padding: 15px;
+    padding: 12px;
     background: #1a1a1a;
     color: #fff;
     white-space: pre-wrap;
@@ -156,12 +156,6 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    line-height: 1.6;
-    /* Explicit line height */
-    max-height: 8em;
-    /* 1.6 * 5 lines = 8em fallback limit */
-    /* Check if white-space pre-wrap is causing issues. 
-       If pre-wrap is essential, we keep it, but max-height ensures it doesn't grow. */
 }
 
 /* Specific adjustment for collapsed state logic to match JS */
