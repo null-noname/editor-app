@@ -12,10 +12,11 @@ const firebaseConfig = {
   appId: "1:666399306180:web:619b5765655311d4a03491"
 };
 
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig, "EditorApp");
 const auth = getAuth(app);
 const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: 'select_account' });
 
 // Set persistence to SESSION to avoid cross-app conflicts
 setPersistence(auth, browserSessionPersistence);
