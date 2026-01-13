@@ -45,19 +45,21 @@
     <!-- Tab: Memos -->
     <div id="ws-content-memo" class="workspace-tab-content">
         <!-- Memo List View -->
+        <!-- Memo List View -->
         <div id="memo-list-view" class="memo-pane-container active-subview">
-            <div class="memo-actions-bar"
-                style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                <button id="memo-new-btn" class="btn-memo-add"
-                    style="background:var(--clr-add); color:#fff; border:none; padding:8px 16px; border-radius:4px; font-weight:bold; cursor:pointer;">＋
-                    新しいメモを追加</button>
+            <div
+                style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid #333; padding-bottom:10px;">
+                <h2 class="retro-subtitle" style="margin:0;">メモ一覧</h2>
+                <button id="memo-new-btn" class="btn-retro add">＋新規メモ</button>
             </div>
 
-            <!-- Filter Bar -->
-            <div id="memo-filter-bar" style="margin-bottom:15px; display:flex; flex-wrap:wrap; gap:8px;"></div>
+            <div id="memo-filter-bar" style="margin-bottom:16px;">
+                <!-- Tag filters will appear here -->
+            </div>
 
-            <!-- Memo List Container -->
-            <div id="memo-list-container" class="memo-list-container"></div>
+            <div id="memo-list-container">
+                <!-- Loaded via memo-list.js -->
+            </div>
         </div>
 
         <!-- Memo Edit View -->

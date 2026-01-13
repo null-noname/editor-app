@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/common/base.css?v=2.3">
     <link rel="stylesheet" href="css/common/components.css?v=2.3">
     <link rel="stylesheet" href="css/pages/dashboard.css?v=2.3">
+    <link rel="stylesheet" href="css/pages/workspace.css?v=2.4">
     <link rel="stylesheet" href="css/stats.css?v=2.3">
     <link rel="stylesheet" href="css/form.css?v=2.3">
     <link rel="stylesheet" href="css/editor.css?v=2.3">
@@ -30,10 +31,12 @@
     <!-- Main Application Shell -->
     <div id="main-app" class="hidden">
         <!-- Header (Plotter Style) -->
-        <header class="main-header" style="display:block; padding: 10px 20px 10px; background:#000; color:#fff; border-bottom:1px solid #333;">
+        <header class="main-header"
+            style="display:block; padding: 10px 20px 10px; background:#000; color:#fff; border-bottom:1px solid #333;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
                 <span class="app-logo" style="font-size:1.2rem; font-weight:bold;">エディター</span>
-                <button class="btn-icon" id="logout-btn" style="background:transparent; color:#888; border:none; cursor:pointer;">ログアウト</button>
+                <button class="btn-icon" id="logout-btn"
+                    style="background:transparent; color:#888; border:none; cursor:pointer;">ログアウト</button>
             </div>
         </header>
 
@@ -46,18 +49,24 @@
                     <div style="text-align:left; margin-bottom:20px;">
                         <h2 class="retro-subtitle" style="margin:0; font-size:1.1rem; color:#fff;">作品一覧</h2>
                     </div>
-                    
+
                     <!-- Row 2: Stats (Writing Diary) - Replacing New Button -->
                     <div style="margin-bottom:20px; display:flex; justify-content:center;">
-                        <div class="stats-card click-card" onclick="switchView('stats-view')" style="width:100%; max-width:400px; margin:0 auto; padding:15px; cursor:pointer;">
-                            <h3 style="text-align:center; border-bottom:1px solid #444; padding-bottom:5px; margin-bottom:10px; color:#ccc;">執筆日記</h3>
-                            <div class="stats-row" style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                        <div class="stats-card click-card" onclick="switchView('stats-view')"
+                            style="width:100%; max-width:400px; margin:0 auto; padding:15px; cursor:pointer;">
+                            <h3
+                                style="text-align:center; border-bottom:1px solid #444; padding-bottom:5px; margin-bottom:10px; color:#ccc;">
+                                執筆日記</h3>
+                            <div class="stats-row"
+                                style="display:flex; justify-content:space-between; margin-bottom:5px;">
                                 <span>今日の文字数</span>
-                                <span class="bright-green-bold"><span id="stat-today-chars">0</span> <span class="stats-unit">字</span></span>
+                                <span class="bright-green-bold"><span id="stat-today-chars">0</span> <span
+                                        class="stats-unit">字</span></span>
                             </div>
                             <div class="stats-row mt-10" style="display:flex; justify-content:space-between;">
                                 <span>7日間の文字数</span>
-                                <span class="bright-green-bold"><span id="stat-weekly-chars">0</span> <span class="stats-unit">字</span></span>
+                                <span class="bright-green-bold"><span id="stat-weekly-chars">0</span> <span
+                                        class="stats-unit">字</span></span>
                             </div>
                         </div>
                     </div>

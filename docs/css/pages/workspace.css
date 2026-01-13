@@ -1,0 +1,178 @@
+/* workspace.css - Plotter Style Overrides for Workspace */
+
+:root {
+    /* Plotter Colors */
+    --clr-save: #2e7d32;
+    /* Green */
+    --clr-delete: #722f37;
+    /* Wine Red */
+    --clr-add: #689f38;
+    /* Darker YellowGreen */
+    --clr-edit: #1565c0;
+    /* Bright Navy */
+    --clr-sort: #cccccc;
+    /* Light Gray */
+    --clr-sort-text: #000;
+    /* Black */
+    --clr-back: #424242;
+    --val-green: #2e7d32; /* Alias for input focus */
+}
+
+/* --- Tab System (Override) --- */
+.workspace-tabs-container {
+    background: #1a1a1a;
+    border-bottom: 2px solid #000; /* Match Plotter */
+}
+
+.ws-tab {
+    color: #888;
+    background: transparent;
+    border-bottom: 4px solid transparent; /* Match Plotter thickness */
+}
+
+.ws-tab.active {
+    color: #fff;
+    background: #222;
+    border-bottom-color: var(--clr-save); /* Green border */
+}
+
+/* --- Memo Views & Components (Copied from Plotter) --- */
+
+.memo-pane-container {
+    padding: 16px; /* Match Plotter tab-content spacing */
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.retro-subtitle {
+    color: var(--clr-save); /* Green */
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+/* Buttons */
+.btn-memo-add {
+    background: var(--clr-add); /* Green */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px; /* Match btn-retro */
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9rem;
+    display: inline-block;
+    min-width: unset; /* Reset editor default */
+    flex: unset; /* Reset editor default */
+}
+
+.btn-memo-add:hover {
+    filter: brightness(1.1);
+}
+
+/* Tags in Filter Bar */
+.tag {
+    display: inline-block;
+    border: 2px solid currentColor;
+    padding: 2px 10px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    background: transparent;
+    border-radius: 4px; /* Ensure rounded */
+    color: #ccc;
+    cursor: pointer;
+}
+
+/* Collapsible Memo Cards */
+.card-retro {
+    background: #1e1e1e; /* Match --bg-card */
+    border: none;
+    border-radius: 12px;
+    padding: 0; /* Reset internal padding for collapsible structure */
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.collapsible-container {
+    border: 1px solid #333;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    background: #1a1a1a;
+    overflow: hidden;
+}
+
+.collapsible-header {
+    background: #252525;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 1px solid #333; /* Separator */
+}
+
+.collapsible-header:hover {
+    background: #333;
+}
+
+/* Toggle Icon */
+.toggle-icon {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--clr-save);
+    width: 24px;
+    text-align: center;
+}
+
+.collapsible-content {
+    padding: 15px;
+    background: #1a1a1a;
+    color: #fff;
+    white-space: pre-wrap;
+    line-height: 1.6;
+}
+
+.collapsible-container.collapsed .collapsible-content {
+    /* Plotter hides content but shows summary in summary-mode */
+     /* In Editor's JS, we toggle display manually or via class. 
+        Plotter CSS: .collapsed .collapsible-content { display: none; } 
+        BUT .collapsed .collapsible-content.summary-mode { display: block; } 
+     */
+}
+
+/* Specific adjustment for collapsed state logic to match JS */
+.collapsible-container.collapsed .collapsible-content:not(.summary-mode) {
+    display: none;
+}
+.collapsible-container:not(.collapsed) .collapsible-content.summary-mode {
+    display: none;
+}
+
+/* Input Focus Colors */
+input:focus, textarea:focus {
+    outline: 2px solid var(--clr-save); /* Green focus */
+    background: #222;
+}
+
+/* Memo Edit View */
+.memo-edit-pane {
+    padding: 16px;
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.input-retro, .textarea-retro {
+    background: #1a1a1a;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    padding: 10px 12px;
+}
+
+.input-retro:focus, .textarea-retro:focus {
+    outline: 2px solid var(--clr-save);
+    background: #222;
+}
