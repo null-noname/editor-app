@@ -35,9 +35,6 @@ import {
     openWork,
     closeWorkspace,
     switchWorkspaceTab,
-    openWork,
-    closeWorkspace,
-    switchWorkspaceTab,
     addNewChapter,
     saveCurrentChapter,
     toggleVerticalMode as workspaceToggleVerticalMode, // Rename to avoid conflict with editor.js
