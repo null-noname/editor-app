@@ -37,7 +37,7 @@ export function refreshMemoList(workId) {
     }
 
     if (!workId) {
-        container.innerHTML = '<div style="text-align:center; padding:40px; color:#666;">作品を選択してください</div>';
+        container.innerHTML = '<div class="msg-center">作品を選択してください</div>';
         return;
     }
 
@@ -52,7 +52,7 @@ export function refreshMemoList(workId) {
         renderMemoCards();
     }, (error) => {
         console.error('[MemoList] メモ監視エラー:', error);
-        container.innerHTML = '<div style="text-align:center; padding:20px; color:red;">読み込みエラー</div>';
+        container.innerHTML = '<div class="msg-error">読み込みエラー</div>';
     });
 }
 
@@ -70,16 +70,10 @@ function renderMemoTags() {
 
     // 「すべて」ボタン
     const allBtn = document.createElement('button');
-    allBtn.className = 'tag';
-    allBtn.style.marginRight = '8px';
-    allBtn.style.cursor = 'pointer';
+    allBtn.className = 'tag-filter-btn';
     // Active style check
     if (activeTagFilter === null) {
-        allBtn.style.background = '#eee';
-        allBtn.style.color = '#333';
-    } else {
-        allBtn.style.background = '#444';
-        allBtn.style.color = '#ccc';
+        allBtn.classList.add('active');
     }
 
     allBtn.textContent = 'すべて';
@@ -89,15 +83,9 @@ function renderMemoTags() {
     // 各タグボタン
     allTags.forEach(tag => {
         const btn = document.createElement('button');
-        btn.className = 'tag';
-        btn.style.marginRight = '8px';
-        btn.style.cursor = 'pointer';
+        btn.className = 'tag-filter-btn';
         if (activeTagFilter === tag) {
-            btn.style.background = '#eee';
-            btn.style.color = '#333';
-        } else {
-            btn.style.background = '#444';
-            btn.style.color = '#ccc';
+            btn.classList.add('active');
         }
         btn.textContent = tag;
         btn.addEventListener('click', () => filterByTag(tag));
@@ -129,7 +117,7 @@ function renderMemoCards() {
     }
 
     if (filtered.length === 0) {
-        container.innerHTML = '<div style="text-align:center; padding:40px; color:#666;">メモがありません</div>';
+        container.innerHTML = '<div class="msg-center">メモがありません</div>';
         return;
     }
 
