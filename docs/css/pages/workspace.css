@@ -264,6 +264,13 @@
     font-size: 1rem;
 }
 
+.header-click-area {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+}
+
 .spacer-60 {
     width: 60px;
 }
