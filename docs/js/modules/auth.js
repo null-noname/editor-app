@@ -1,11 +1,12 @@
 import { auth, googleProvider } from "../core/config.js";
-import { signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { signInWithPopup, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 /**
  * Handles Google Login
  */
 export async function login() {
     try {
+        await setPersistence(auth, browserLocalPersistence);
         await signInWithPopup(auth, googleProvider);
     } catch (error) {
         console.error("Login Error:", error);
