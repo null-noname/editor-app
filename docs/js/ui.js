@@ -257,8 +257,8 @@ export function renderWorkList(works, onOpen, onDelete, onPin, filter = 'all', s
         if (editBtn) {
             editBtn.onclick = (e) => {
                 e.stopPropagation();
-                if (onEdit) onEdit(work.id);
-                else if (window.showWorkSetup) window.showWorkSetup(work.id);
+                // User Request: Jump to Writing (Editor) tab
+                onOpen(work.id);
             };
         }
 

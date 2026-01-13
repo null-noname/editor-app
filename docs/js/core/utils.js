@@ -52,3 +52,24 @@ export function formatWorkDate(val, includeTime = false) {
 
     return formatDate(date, includeTime);
 }
+
+/**
+ * コンテナ内の要素を全削除
+ * @param {HTMLElement} container 
+ */
+export function clearContainer(container) {
+    if (!container) return;
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
+}
+
+/**
+ * テキストエリアの高さ自動調整
+ * @param {HTMLTextAreaElement} textarea 
+ */
+export function autoResizeTextarea(textarea) {
+    if (!textarea) return;
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
+}

@@ -25,13 +25,16 @@ import {
 } from "../../ui.js";
 import { adjustFormLayout } from "../setup/setup.js";
 import { getAllWorks, setupDashBoard } from "../dashboard/dashboard.js";
+import { initMemoList, refreshMemoList } from "../memo/memo-list.js";
+import { initMemoEditor, setMemoWorkId } from "../memo/memo-editor.js";
+
+// Initialize Memo System
+initMemoList();
+initMemoEditor();
 
 let chaptersUnsubscribe = null;
-let memosUnsubscribe = null;
 let currentWorkId = null;
 let currentChapterId = null;
-let editingMemoId = null; // 現在編集中のメモID（nullなら新規）
-let currentMemosList = []; // 現在のメモリストを保持
 
 /**
  * ワークスペースを開く
@@ -45,6 +48,7 @@ export async function openWork(id, tab = 'editor') {
     }
 
     switchView(views.workspace, true);
+    setMemoWorkId(id); // Update Memo module with new Work ID
     setupWorkspace(id);
     switchWorkspaceTab(tab);
 }
@@ -86,7 +90,10 @@ export function switchWorkspaceTab(tab) {
     } else if (tab === 'memo') {
         tabMemo.classList.add('active');
         contentMemo.classList.add('active');
-        if (typeof window.closeMemoEdit === 'function') window.closeMemoEdit();
+        // Refresh Memo List with new Logic
+        refreshMemoList(currentWorkId);
+        // Ensure Editor is closed when entering tag
+        if (window.plotter_closeMemoEditor) window.plotter_closeMemoEditor();
     }
 }
 
@@ -96,7 +103,7 @@ export function switchWorkspaceTab(tab) {
 export function closeWorkspace() {
     console.log("Closing workspace...");
     if (chaptersUnsubscribe) chaptersUnsubscribe();
-    if (memosUnsubscribe) memosUnsubscribe();
+    if (chaptersUnsubscribe) chaptersUnsubscribe();
 
     const infoContainer = document.getElementById('ws-info-container');
     const setupForm = document.querySelector('#setup-view .form-panel'); // 編集用フォーム
@@ -132,7 +139,7 @@ export function closeWorkspace() {
  */
 function setupWorkspace(workId) {
     if (chaptersUnsubscribe) chaptersUnsubscribe();
-    if (memosUnsubscribe) memosUnsubscribe();
+
 
     setupEditor(
         () => { }, // OnInput
@@ -158,155 +165,9 @@ function setupWorkspace(workId) {
         }
     });
 
-    // Subscribe Memos
-    memosUnsubscribe = import("../../core/db.js").then(m => m.subscribeMemos(workId, (memos) => {
-        currentMemosList = memos;
-        renderMemoList(memos);
-    }));
+
 }
 
-function renderMemoList(memos) {
-    const listEl = document.getElementById('memo-list');
-    if (!listEl) return;
-
-    if (memos.length === 0) {
-        listEl.innerHTML = '<p style="text-align:center; color:#666; padding: 20px;">メモがありません</p>';
-        return;
-    }
-
-    // orderプロパティで昇順ソート（手動並び替え用）
-    const sortedMemos = [...memos].sort((a, b) => (a.order || 0) - (b.order || 0));
-
-    // コンテナを一旦クリア
-    listEl.innerHTML = '';
-
-    sortedMemos.forEach((memo, index) => {
-        const escapedTitle = (memo.title || "無題のメモ").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        const escapedContent = (memo.content || "").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-
-        const card = document.createElement('div');
-        card.className = 'memo-card collapsed'; // 初期状態は閉じている（CSSで制御）
-        card.innerHTML = `
-            <div class="memo-header" style="cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
-                <h4 class="memo-title" style="margin:0; flex:1;">${escapedTitle}</h4>
-                <div class="memo-actions" style="display:flex; gap:8px; align-items:center;">
-                    <button class="btn-retro edit blue" style="padding:4px 10px; font-size:0.75rem;">編集</button>
-                    <button class="btn-retro move-up" style="padding:4px 8px; font-size:0.75rem;">▲</button>
-                    ${index < sortedMemos.length - 1 ? `<button class="btn-retro move-down" style="padding:4px 8px; font-size:0.75rem;">▼</button>` : ''}
-                </div>
-            </div>
-            <div class="memo-content" style="display:none; margin-top:12px; padding-top:12px; border-top:1px dashed #444; white-space:pre-wrap; font-size:0.95rem; line-height:1.6; color:#ddd;">
-                ${escapedContent || '内容なし'}
-            </div>
-        `;
-
-        // クリックで開閉（ヘッダー部分のみ）
-        card.querySelector('.memo-header').addEventListener('click', (e) => {
-            if (e.target.closest('button')) return; // ボタンクリック時は無視
-            const content = card.querySelector('.memo-content');
-            const isHidden = content.style.display === 'none';
-            content.style.display = isHidden ? 'block' : 'none';
-        });
-
-        // 編集ボタン
-        card.querySelector('.edit').addEventListener('click', (e) => {
-            e.stopPropagation();
-            editMemo(memo.id, memo.title, memo.content);
-        });
-
-        // 移動ボタン
-        card.querySelector('.move-up').addEventListener('click', (e) => {
-            e.stopPropagation();
-            moveMemoUp(index);
-        });
-
-        const moveDownBtn = card.querySelector('.move-down');
-        if (moveDownBtn) {
-            moveDownBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                moveMemoDown(index);
-            });
-        }
-
-        listEl.appendChild(card);
-    });
-}
-
-
-
-
-/**
- * メモを上に移動
- */
-export async function moveMemoUp(index) {
-    if (index <= 0) return;
-    const { updateMemoOrder } = await import("../../core/db.js");
-    const m1 = currentMemosList[index];
-    const m2 = currentMemosList[index - 1];
-    await updateMemoOrder(currentWorkId, m1.id, m1.order, m2.id, m2.order);
-}
-
-/**
- * メモを下に移動
- */
-export async function moveMemoDown(index) {
-    if (index >= currentMemosList.length - 1) return;
-    const { updateMemoOrder } = await import("../../core/db.js");
-    const m1 = currentMemosList[index];
-    const m2 = currentMemosList[index + 1];
-    await updateMemoOrder(currentWorkId, m1.id, m1.order, m2.id, m2.order);
-}
-
-/**
- * 新規メモ作成画面を開く
- */
-export function addNewMemo() {
-    editingMemoId = null;
-    document.getElementById('memo-title-input').value = "";
-    document.getElementById('memo-content-input').value = "";
-    document.getElementById('memo-delete-btn').classList.add('hidden');
-
-    toggleMemoSubview('edit');
-}
-
-/**
- * メモ編集画面を開く
- */
-export const editMemo = (memoId, title, content) => {
-    editingMemoId = memoId;
-    document.getElementById('memo-title-input').value = title || "";
-    document.getElementById('memo-content-input').value = content || "";
-    document.getElementById('memo-delete-btn').classList.remove('hidden');
-
-    toggleMemoSubview('edit');
-};
-
-/**
- * メモ編集画面を閉じて一覧に戻る
- */
-export const closeMemoEdit = () => {
-    toggleMemoSubview('list');
-};
-
-/**
- * メモの保存
- */
-export const saveMemoCurrent = async () => {
-    const title = document.getElementById('memo-title-input').value.trim() || "無題のメモ";
-    const content = document.getElementById('memo-content-input').value;
-    const { createMemo, updateMemo } = await import("../../core/db.js");
-
-    if (editingMemoId) {
-        await updateMemo(currentWorkId, editingMemoId, { title, content });
-    } else {
-        await createMemo(currentWorkId, title, content);
-    }
-
-    closeMemoEdit();
-};
-
-// 全体から現在の作品IDを参照できるようにする（保存ミス防止）
-window.getCurrentWorkId = () => currentWorkId;
 
 /**
  * 作品情報の表示モード（プロッター同期・表示専用）
@@ -317,62 +178,22 @@ export async function toggleWorkInfoMode(mode) {
 
     if (!infoContainer || !infoView) return;
 
-    // パネルを探す（テンプレート内または移動済みのコンテナ内）
+    // パネルを探す
     const infoPanel = infoView.querySelector('.info-view-wrapper') || infoContainer.querySelector('.info-view-wrapper');
 
     if (infoPanel) {
-        // コンテナへ移動（まだ移動していない場合のみ）
         if (infoPanel.parentElement !== infoContainer) {
             infoContainer.appendChild(infoPanel);
         }
-
-        // データの流し込み（キャッシュがない場合は少し待機してみる）
         let works = getAllWorks();
         if (works.length === 0) {
             await new Promise(resolve => setTimeout(resolve, 1000));
             works = getAllWorks();
         }
-
         const work = works.find(w => w.id === currentWorkId);
         if (work) {
-            // 第2引数にコンテナを渡し、名指しで描画させる
             renderWorkInfo(work, infoContainer);
-
-            // 編集ボタンのイベント設定（テンプレートの移動後に設定する必要がある）
-            // const editBtn = infoContainer.querySelector('#info-edit-btn');
-            // if (editBtn) {
-            //     editBtn.onclick = () => window.showWorkSetup(currentWorkId);
-            // }
         }
-    }
-}
-
-/**
- * 現在編集中のメモを削除
- */
-export const deleteMemoCurrent = async () => {
-    if (editingMemoId && confirm("このメモを削除してもよろしいですか？")) {
-        const { deleteMemo } = await import("../../core/db.js");
-        await deleteMemo(currentWorkId, editingMemoId);
-        closeMemoEdit();
-    }
-};
-
-/**
- * メモのサブビュー（一覧/編集）を切り替え
- */
-function toggleMemoSubview(view) {
-    const listView = document.getElementById('memo-view-list');
-    const editView = document.getElementById('memo-view-edit');
-
-    if (view === 'list') {
-        listView?.classList.add('active-subview');
-        listView?.classList.remove('hidden');
-        editView?.classList.add('hidden');
-    } else {
-        listView?.classList.remove('active-subview');
-        listView?.classList.add('hidden');
-        editView?.classList.remove('hidden');
     }
 }
 
@@ -397,9 +218,6 @@ export async function addNewChapter() {
         currentChapterId = newId;
     }
 }
-
-
-// エディタ便利機能の委譲
 
 // エディタ便利機能の委譲
 export { toggleVerticalMode, insertRuby, insertDash };

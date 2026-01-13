@@ -35,11 +35,10 @@ import {
     openWork,
     closeWorkspace,
     switchWorkspaceTab,
+    openWork,
+    closeWorkspace,
+    switchWorkspaceTab,
     addNewChapter,
-    addNewMemo,
-    closeMemoEdit,
-    saveMemoCurrent,
-    deleteMemoCurrent,
     saveCurrentChapter,
     toggleVerticalMode as workspaceToggleVerticalMode, // Rename to avoid conflict with editor.js
     insertRuby as workspaceInsertRuby, // Rename to avoid conflict with editor.js
@@ -91,10 +90,6 @@ async function init() {
     safeRegister('openWork', openWork);
     safeRegister('switchWorkspaceTab', switchWorkspaceTab);
     safeRegister('addNewChapter', addNewChapter);
-    safeRegister('addNewMemo', addNewMemo);
-    safeRegister('closeMemoEdit', closeMemoEdit);
-    safeRegister('saveMemoCurrent', saveMemoCurrent);
-    safeRegister('deleteMemoCurrent', deleteMemoCurrent);
     safeRegister('saveCurrentChapter', saveCurrentChapter);
     safeRegister('toggleVerticalMode', workspaceToggleVerticalMode);
     safeRegister('insertRuby', workspaceInsertRuby);
