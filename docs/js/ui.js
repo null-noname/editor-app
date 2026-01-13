@@ -232,7 +232,7 @@ export function renderWorkList(works, onOpen, onDelete, onPin, filter = 'all', s
                     <span>作成日: ${formatWorkDate(work.createdAt)}</span>
                     <span>更新日: ${formatWorkDate(work.updatedAt, true)}</span>
                 </div>
-                <button class="btn-retro edit-btn" data-action="edit" style="font-size:0.8rem; padding:4px 12px; background:transparent; color:#fff; border:1px solid #fff;">編集</button>
+                <button class="btn-retro blue" data-action="edit" style="font-size:0.8rem; padding:4px 12px;">編集</button>
             </div>
         `;
 
