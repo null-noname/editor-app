@@ -112,49 +112,54 @@
     filter: brightness(1.1);
 }
 
-/* Strict Button Sync (Plotter Flat Design) */
+/* Strict Button Sync (Plotter Retro Design) */
 .btn-retro.btn-delete,
 .btn-retro.btn-edit,
 .btn-sort.btn-up,
-/* Assuming btn-sort is used for Up button base */
 .btn-retro.btn-add {
-    padding: 4px 10px !important;
-    font-size: 12px !important;
-    border-radius: 4px !important;
-    font-weight: bold !important;
+    /* Flat but thick retro shape */
+    padding: 6px 12px !important;
     border: none !important;
-    box-shadow: none !important;
-    /* Remove 3D effects */
+    border-radius: 4px !important;
+    font-weight: 700 !important;
+    font-size: 12px !important;
+    color: #ffffff !important;
+    cursor: pointer !important;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2) !important;
+    /* Thickness */
+    transition: filter 0.2s, transform 0.1s !important;
     background-image: none !important;
-    /* Remove gradients */
-    color: white !important;
-    transition: filter 0.2s !important;
 }
 
 .btn-retro.btn-edit.blue {
-    background-color: #3b82f6 !important;
-    /* Plotter Blue */
+    background-color: #5a7b9c !important;
+    /* Retro Navy Blue */
 }
 
 .btn-retro.btn-delete {
-    background-color: #ef4444 !important;
-    /* Plotter Red */
+    background-color: #c05a5a !important;
+    /* Retro Brick Red */
 }
 
 .btn-sort.btn-up {
-    background-color: #6b7280 !important;
-    /* Plotter Gray */
+    background-color: #a09c84 !important;
+    /* Retro Khaki Beige */
     min-width: unset !important;
-    /* Reset any legacy width */
 }
 
-/* Hover Effects (Brightness) */
+/* Hover & Active Effects */
 .btn-retro.btn-delete:hover,
 .btn-retro.btn-edit:hover,
 .btn-sort.btn-up:hover {
     filter: brightness(1.1);
-    transform: none !important;
-    /* Remove legacy movement */
+    transform: translateY(-1px) !important;
+}
+
+.btn-retro.btn-delete:active,
+.btn-retro.btn-edit:active,
+.btn-sort.btn-up:active {
+    transform: translateY(1px) !important;
+    box-shadow: none !important;
 }
 
 /* Collapsible Memo Cards */
