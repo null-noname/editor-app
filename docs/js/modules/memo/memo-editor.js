@@ -58,11 +58,16 @@ export async function openMemoEditor(id = null) {
     currentMemoId = id;
     const listEl = document.getElementById('memo-list-view');
     const editEl = document.getElementById('memo-edit-view');
-    if (listEl) listEl.style.display = 'none';
+
+    // Use utility class for visibility
+    if (listEl) {
+        listEl.classList.remove('active-subview');
+        listEl.classList.add('hidden');
+    }
+
     if (editEl) {
-        editEl.style.display = 'block';
-        editEl.classList.remove('hidden'); // Force remove hidden class
-        console.log('Memo Editor Visible:', editEl.style.display, 'Hidden Class Removed:', !editEl.classList.contains('hidden'));
+        editEl.classList.remove('hidden');
+        editEl.classList.add('active-subview');
     }
 
     const titleInput = document.getElementById('memo-title');
@@ -97,8 +102,16 @@ export async function openMemoEditor(id = null) {
 export function closeMemoEditor() {
     const listEl = document.getElementById('memo-list-view');
     const editEl = document.getElementById('memo-edit-view');
-    if (listEl) listEl.style.display = 'block';
-    if (editEl) editEl.style.display = 'none';
+
+    if (listEl) {
+        listEl.classList.remove('hidden');
+        listEl.classList.add('active-subview');
+    }
+
+    if (editEl) {
+        editEl.classList.remove('active-subview');
+        editEl.classList.add('hidden');
+    }
 }
 
 /**
