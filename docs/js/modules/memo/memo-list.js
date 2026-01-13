@@ -148,12 +148,12 @@ function createMemoCard(memo) {
         <div class="collapsible-header">
             <div class="header-click-area">
                 <h3>${escapeHtml(memo.title || "無題")}</h3>
-            </div>
-            <div class="header-actions">
-                <button class="btn-retro btn-delete">削除</button>
-                <button class="btn-retro btn-edit blue">編集</button>
-                <button class="btn-sort btn-up">▲</button>
-                <span class="toggle-icon">＋</span>
+                <div class="header-actions">
+                    <button class="btn-retro btn-delete">削除</button>
+                    <button class="btn-retro btn-edit blue">編集</button>
+                    <button class="btn-sort btn-up">▲</button>
+                    <span class="toggle-icon">＋</span>
+                </div>
             </div>
         </div>
         <div class="collapsible-content summary-mode">
