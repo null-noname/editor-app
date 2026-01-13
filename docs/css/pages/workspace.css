@@ -268,17 +268,35 @@
     width: 60px;
 }
 
+/* Strict Header H3 Styling (Plotter Sync) */
+.collapsible-header h3 {
+    margin: 0;
+    flex: 1;
+    /* Strict Computed Values */
+    font-size: 17.6px;
+    font-weight: 700;
+    line-height: 24.64px;
+    color: rgb(255, 255, 255);
+
+    /* Truncation */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .gold-bold {
     color: #d4af37;
     /* Gold */
-    font-weight: bold;
+    font-weight: 700;
     font-size: 0.9rem;
     margin-bottom: 6px;
     display: block;
 }
 
 .form-footer {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding-top: 20px;
     border-top: 1px solid #333;
     margin-top: 20px;
