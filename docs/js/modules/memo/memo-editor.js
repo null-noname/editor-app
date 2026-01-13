@@ -49,6 +49,8 @@ export function setMemoWorkId(workId) {
  * エディタを開く
  */
 export async function openMemoEditor(id = null) {
+    console.log('Target ID:', id, 'Current Work ID:', currentWorkId);
+
     if (!currentWorkId) {
         console.error("WorkID not set for Memo Editor");
         return;
@@ -57,7 +59,11 @@ export async function openMemoEditor(id = null) {
     const listEl = document.getElementById('memo-list-view');
     const editEl = document.getElementById('memo-edit-view');
     if (listEl) listEl.style.display = 'none';
-    if (editEl) editEl.style.display = 'block';
+    if (editEl) {
+        editEl.style.display = 'block';
+        editEl.classList.remove('hidden'); // Force remove hidden class
+        console.log('Memo Editor Visible:', editEl.style.display, 'Hidden Class Removed:', !editEl.classList.contains('hidden'));
+    }
 
     const titleInput = document.getElementById('memo-title');
     const tagsInput = document.getElementById('memo-tags');
