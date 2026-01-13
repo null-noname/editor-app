@@ -127,179 +127,51 @@
 }
 
 /* Collapsible Memo Cards */
+/* Collapsible Memo Cards (Updated with Computed Values) */
 .card-retro {
-    background: #1e1e1e;
-    /* Match --bg-card */
-    border: none;
+    background-color: rgb(30, 30, 30);
     border-radius: 12px;
-    padding: 0;
-    /* Reset internal padding for collapsible structure */
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 4px 12px 0px;
+    padding: 12px;
     margin-bottom: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+
+    /* Layout Adjustment for Window Size */
+    max-width: 800px;
+    margin: 0 auto 20px auto;
 }
 
-/* --- Memo Card Internal Layout (Replaces Inline Styles) --- */
-
-.collapsible-container {
-    border: 1px solid #333;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    background: #1a1a1a;
-    overflow: hidden;
-    padding: 0;
-    /* from inline */
-}
-
-.collapsible-header {
-    background: #252525;
-    padding: 12px;
-    /* from inline */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    user-select: none;
-    border-radius: 8px 8px 0 0;
-    /* from inline */
-    min-height: 50px;
-    /* from inline */
-    border-bottom: 1px solid #333;
-}
-
-.header-click-area {
-    flex: 1;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    min-width: 0;
-}
-
-.header-click-area h3 {
-    font-size: 1.1rem;
-    color: #fff;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    flex: 1;
-    margin: 0;
-}
-
-.header-actions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-left: 12px;
-}
-
-.header-actions .btn-retro {
-    font-size: 0.75rem;
-    padding: 4px 8px;
-    border-radius: 4px;
-}
-
-.header-actions .btn-delete {
-    background: var(--clr-delete);
-}
-
-.header-actions .btn-edit {
-    /* handled by blue class if needed, or default text */
-}
-
-/* Toggle Icon */
-.toggle-icon {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: var(--clr-save);
-    width: 24px;
-    /* from inline */
-    display: flex;
-    /* from inline */
-    justify-content: center;
-    /* from inline */
-    align-items: center;
-    /* from inline */
-    cursor: pointer;
-}
-
-.collapsible-content {
-    padding: 12px;
-    /* from inline */
-    background: #0a0a0a;
-    /* from inline */
-    color: #fff;
-    border-radius: 0 0 8px 8px;
-    /* from inline */
-    border-top: 1px solid #222;
-    /* from inline */
-    cursor: pointer;
-    /* from inline */
-}
-
-/* Summary Content */
-.line-clamp-5 {
-    display: -webkit-box;
-    -webkit-line-clamp: 5;
-    line-clamp: 5;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    /* Restore Height Constraints (User Request) */
-    line-height: 1.6;
-    max-height: 8em;
-    /* 5 lines * 1.6em */
-
-    color: #ddd;
-    font-size: 0.95rem;
-    margin-bottom: 8px;
-    white-space: pre-wrap;
-    /* Restored but strictly controlled by max-height */
-}
-
-.memo-tags-list {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-}
-
-.memo-tags-list .tag {
-    color: #888;
-    border: 1px solid #444;
-    /* Changed from inline border-color */
-    font-size: 0.7rem;
-    padding: 2px 6px;
-    border-radius: 4px;
-}
-
-.memo-tags-list.extended {
-    padding-top: 10px;
-    border-top: 1px solid #222;
-}
-
-.memo-tags-list.extended .tag {
-    background: #333;
-    color: #fff;
-    font-size: 0.75rem;
-    border: none;
-}
-
-.memo-content-full {
-    color: #eee;
-    white-space: pre-wrap;
-    font-size: 1.05rem;
-    line-height: 1.6;
-    margin-bottom: 12px;
-}
+/* ... existing styles ... */
 
 .input-retro,
 .textarea-retro {
-    background: #1a1a1a;
-    border: none;
-    border-radius: 8px;
+    background: #111;
+    border: 1px solid #444;
+    border-radius: 4px;
     color: #fff;
-    padding: 10px 12px;
+    padding: 10px;
     width: 100%;
+    margin-bottom: 15px;
+}
+
+.input-retro.title {
+    font-size: 1.1rem;
+    padding: 10px;
+}
+
+.input-retro.tags {
+    font-size: 0.9rem;
+    color: #ccc;
+    padding: 8px;
+}
+
+.textarea-retro.content {
+    min-height: 400px;
+    padding: 12px;
+    color: #ddd;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    resize: vertical;
+    margin-bottom: 20px;
 }
 
 .input-retro:focus,
