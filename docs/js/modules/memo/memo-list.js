@@ -166,7 +166,7 @@ function createMemoCard(memo) {
                 <button class="btn-retro btn-delete" style="background:var(--clr-delete); font-size:0.75rem; padding:4px 8px; border-radius:4px;">削除</button>
                 <button class="btn-retro btn-edit blue" style="font-size:0.75rem; padding:4px 8px; border-radius:4px;">編集</button>
                 <button class="btn-sort btn-up" style="padding:4px 8px;">▲</button>
-                <span class="toggle-icon gold-bold" style="width:1.2rem; font-size:1.2rem; display:flex; justify-content:center; cursor:pointer; color:var(--clr-save);">＋</span>
+                <span class="toggle-icon gold-bold" style="width:24px; font-size:1.2rem; display:flex; justify-content:center; align-items:center; cursor:pointer; color:var(--clr-save);">＋</span>
             </div>
         </div>
         <div class="collapsible-content summary-mode" style="padding: 12px; background: #0a0a0a; border-radius: 0 0 8px 8px; cursor:pointer; border-top:1px solid #222;">
@@ -179,7 +179,10 @@ function createMemoCard(memo) {
         const content = card.querySelector('.collapsible-content');
         const icon = card.querySelector('.toggle-icon');
 
-        icon.textContent = isCollapsed ? '＋' : '－';
+        // Update icon based on collapsed state
+        if (icon) {
+            icon.textContent = isCollapsed ? '＋' : '－';
+        }
 
         if (isCollapsed) {
             content.classList.add('summary-mode');
