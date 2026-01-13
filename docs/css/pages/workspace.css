@@ -269,7 +269,7 @@
 }
 
 /* Strict Header H3 Styling (Plotter Sync - Forced) */
-.collapsible-header h3 {
+.header-click-area h3 {
     margin: 0 !important;
     flex: 1 !important;
     /* Strict Computed Values */
