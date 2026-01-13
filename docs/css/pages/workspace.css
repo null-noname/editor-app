@@ -174,8 +174,10 @@
     margin-bottom: 20px;
 }
 
-outline: 2px solid var(--clr-save);
-background: #222;
+.input-retro:focus,
+.textarea-retro:focus {
+    outline: 2px solid var(--clr-save);
+    background: #222;
 }
 
 /* --- Memo Edit UI Sync (Restored & Computed) --- */
