@@ -150,7 +150,7 @@ function createMemoCard(memo) {
 
     const getSummaryHtml = () => {
         return `
-            <div class="line-clamp-5" style="color:#ddd; white-space:pre-wrap; font-size:0.95rem; margin-bottom:8px;">${escapeHtml(memo.content || "") || "内容なし"}</div>
+            <div class="line-clamp-5" style="color:#ddd; font-size:0.95rem; margin-bottom:8px;">${escapeHtml(memo.content || "") || "内容なし"}</div>
             <div style="display:flex; gap:6px; flex-wrap:wrap;">
                 ${(memo.tags || []).map(t => `<span class="tag" style="color:#888; border-color:#444; font-size:0.7rem;">${escapeHtml(t)}</span>`).join('')}
             </div>
