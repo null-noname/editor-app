@@ -20,24 +20,55 @@
 }
 
 /* --- Tab System (Override) --- */
+/* --- Tab System (Override) --- */
 .workspace-tabs-container {
     background: #1a1a1a;
     border-bottom: 2px solid #000;
     /* Match Plotter */
+    display: flex;
+    /* Ensure flex layout is explicit if not inherited */
 }
 
 .ws-tab {
     color: #888;
     background: transparent;
+    border: none;
+    /* Reset border */
     border-bottom: 4px solid transparent;
-    /* Match Plotter thickness */
+    /* Keep layout stable */
+    padding: 12px;
+    /* Match Plotter User Request (10-12px) */
+    font-weight: bold;
+    font-size: 1rem;
+    flex: 1;
+    cursor: pointer;
+    text-align: center;
+    transition: color 0.2s;
 }
 
 .ws-tab.active {
     color: #fff;
-    background: #222;
-    border-bottom-color: var(--clr-save);
-    /* Green border */
+    background: transparent;
+    /* Remove background color */
+    border-bottom: 2px solid var(--clr-save);
+    /* Match Plotter 2px border */
+}
+
+/* --- Top Button (Flat) --- */
+#editor-back-to-top {
+    font-size: 0.85rem;
+    padding: 4px 16px;
+    border: none;
+    box-shadow: none;
+    background: #444;
+    /* Standard retro bg */
+    background-image: none;
+    /* Remove any potential images */
+    color: #fff;
+}
+
+#editor-back-to-top:hover {
+    filter: brightness(1.1);
 }
 
 /* --- Memo Views & Components (Copied from Plotter) --- */
@@ -261,9 +292,14 @@
     margin-bottom: 12px;
 }
 
-border-radius: 8px;
-color: #fff;
-padding: 10px 12px;
+.input-retro,
+.textarea-retro {
+    background: #1a1a1a;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    padding: 10px 12px;
+    width: 100%;
 }
 
 .input-retro:focus,
