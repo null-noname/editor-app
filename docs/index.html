@@ -29,26 +29,43 @@
 
     <!-- Main Application Shell -->
     <div id="main-app" class="hidden">
+        <!-- Header (Plotter Style) -->
+        <header class="main-header" style="display:block; padding: 10px 20px 10px; background:#000; color:#fff; border-bottom:1px solid #333;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span class="app-logo" style="font-size:1.2rem; font-weight:bold;">エディター</span>
+                <button class="btn-icon" id="logout-btn" style="background:transparent; color:#888; border:none; cursor:pointer;">ログアウト</button>
+            </div>
+        </header>
 
         <!-- View: Dashboard (TOP) -->
         <div id="top-view" class="view-content view-container">
             <div class="container-narrow">
-                <!-- Plotter-style Header -->
+                <!-- Plotter-style Content Area -->
                 <div style="margin-bottom:20px; border-bottom:1px solid #333; padding-bottom:15px;">
                     <!-- Row 1: Title -->
-                    <div style="text-align:left; margin-bottom:10px;">
+                    <div style="text-align:left; margin-bottom:20px;">
                         <h2 class="retro-subtitle" style="margin:0; font-size:1.1rem; color:#fff;">作品一覧</h2>
                     </div>
-                    <!-- Row 2: New Button -->
-                    <div style="text-align:center; margin-bottom:10px;">
-                        <button class="btn-retro add" style="padding:6px 24px; font-size:1rem;"
-                            onclick="showWorkSetup()">＋新規作成</button>
+                    
+                    <!-- Row 2: Stats (Writing Diary) - Replacing New Button -->
+                    <div style="margin-bottom:20px; display:flex; justify-content:center;">
+                        <div class="stats-card click-card" onclick="switchView('stats-view')" style="width:100%; max-width:400px; margin:0 auto; padding:15px; cursor:pointer;">
+                            <h3 style="text-align:center; border-bottom:1px solid #444; padding-bottom:5px; margin-bottom:10px; color:#ccc;">執筆日記</h3>
+                            <div class="stats-row" style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                                <span>今日の文字数</span>
+                                <span class="bright-green-bold"><span id="stat-today-chars">0</span> <span class="stats-unit">字</span></span>
+                            </div>
+                            <div class="stats-row mt-10" style="display:flex; justify-content:space-between;">
+                                <span>7日間の文字数</span>
+                                <span class="bright-green-bold"><span id="stat-weekly-chars">0</span> <span class="stats-unit">字</span></span>
+                            </div>
+                        </div>
                     </div>
+
                     <!-- Row 3: Sort -->
                     <div style="display:flex; justify-content:flex-end; align-items:center; gap:6px;">
                         <select id="sort-order" class="select-retro"
-                            style="font-size:0.75rem; padding:2px 6px; background:#111; color:#fff; border:none; border-radius:4px; cursor:pointer; width: auto;">
-                            <!-- Plotter options are updatedAt_desc etc. Editor uses updatedAt. Keeping Editor logic but Plotter style -->
+                            style="font-size:0.75rem; padding:2px 6px; background:#111; color:#fff; border:none; border-radius:4px; cursor:pointer; width:auto;">
                             <option value="updatedAt">更新順</option>
                             <option value="createdAt">作成日</option>
                         </select>

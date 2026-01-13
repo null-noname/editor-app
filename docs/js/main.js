@@ -1,4 +1,4 @@
-import { observeAuth, getCurrentUser, login } from "./modules/auth.js";
+import { observeAuth, getCurrentUser, login, logout } from "./modules/auth.js";
 import {
     subscribeWorks,
     createWork,
@@ -118,9 +118,11 @@ async function init() {
         }
     });
 
-    // --- 3. ログインボタンの設定 ---
+    // --- 3. ログイン・ログアウトボタンの設定 ---
     const loginBtn = document.getElementById('google-login-btn');
+    const logoutBtn = document.getElementById('logout-btn');
     if (loginBtn) loginBtn.onclick = login;
+    if (logoutBtn) logoutBtn.onclick = logout;
 
     // --- 4. 外部コンポーネントを並列に読み込む ---
     await Promise.all([
