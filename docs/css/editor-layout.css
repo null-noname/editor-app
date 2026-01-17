@@ -133,19 +133,22 @@
 
 .header-actions-row {
     display: flex;
-    justify-content: flex-end;
-    /* Align all to right */
+    justify-content: space-between;
+    /* Split left and right */
     align-items: center;
     width: 100%;
     margin-top: 5px;
 }
 
-.actions-full-right {
+.actions-left,
+.actions-right {
     display: flex;
     gap: 8px;
     align-items: center;
     flex-wrap: wrap;
-    /* Allow wrap on small screens */
+}
+
+.actions-right {
     justify-content: flex-end;
 }
 
