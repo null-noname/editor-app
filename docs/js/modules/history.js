@@ -3,10 +3,10 @@
  * Handles fetching version history and displaying diffs.
  */
 
-import { escapeHtml, formatDate } from "../../core/utils.js";
+import { escapeHtml, formatDate } from "../core/utils.js";
 import { collection, getDocs, orderBy, query, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { db } from "../../core/config.js";
-import { updateChapter } from "../../core/db.js";
+import { db } from "../core/config.js";
+import { updateChapter } from "../core/db.js";
 
 export const HistoryManager = {
     workId: null,

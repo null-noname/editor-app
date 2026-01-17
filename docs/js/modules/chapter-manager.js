@@ -2,7 +2,7 @@
  * Chapter Management Logic (DB Integrated)
  */
 
-import { createChapter, updateChapter } from "../../core/db.js"; // Adjusted path to "../../core/db.js" assuming this file is in js/modules/
+import { createChapter, updateChapter } from "../core/db.js";
 import { renderChapterList } from "./chapter-list.js";
 import { WordCounter } from "./word-count.js";
 

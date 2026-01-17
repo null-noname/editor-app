@@ -3,7 +3,7 @@
  * Handles exporting chapter content to TXT or PDF.
  */
 
-import { escapeHtml } from "../../core/utils.js";
+import { escapeHtml } from "../core/utils.js";
 
 export const ExportManager = {
     init() {
