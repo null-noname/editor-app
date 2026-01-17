@@ -35,12 +35,22 @@
                 <div class="editor-area-header">
                     <input type="text" id="chapter-subtitle" class="input-retro subtitle-input"
                         placeholder="サブタイトル (例: 第1話 旅立ち)">
-                    <div class="header-actions">
-                        <button class="btn-icon" id="btn-history" title="履歴・バックアップ">🕒</button>
-                        <button class="btn-icon" id="btn-export" title="エクスポート">📤</button>
-                        <button class="btn-icon" id="btn-display-settings" title="表示設定">⚙</button>
-                        <button class="btn-icon" onclick="toggleVerticalMode()" title="縦書き/横書き">縦/横</button>
-                        <button class="btn-retro" onclick="saveCurrentChapter()">保存</button>
+                    <div class="header-actions-row">
+                        <div class="actions-left">
+                            <button class="btn-retro save" onclick="saveCurrentChapter()">保存</button>
+                        </div>
+                        <div class="actions-center">
+                            <button class="btn-retro" onclick="insertRuby()">ルビ</button>
+                            <button class="btn-retro" onclick="insertDash()">ダッシュ</button>
+                        </div>
+                        <div class="actions-right">
+                            <button class="btn-retro" onclick="document.execCommand('undo')">戻る</button>
+                            <button class="btn-retro" onclick="document.execCommand('redo')">進む</button>
+                            <button class="btn-retro" onclick="toggleVerticalMode()">縦/横</button>
+                            <button class="btn-retro" id="btn-display-settings" title="表示設定">⚙</button>
+                            <button class="btn-retro" id="btn-export" title="エクスポート">📤</button>
+                            <button class="btn-retro" id="btn-history">バックアップ</button>
+                        </div>
                     </div>
                 </div>
 

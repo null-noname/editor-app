@@ -84,13 +84,12 @@
 }
 
 .chapter-item-new.active {
-    background: #d500f9;
-    /* Bright Purple */
-    background: linear-gradient(135deg, #e040fb, #d500f9);
-    border-color: #aa00ff;
+    background: #673ab7;
+    /* Deep Purple */
+    border-color: #512da8;
     color: #fff;
     font-weight: bold;
-    border-left: 4px solid #aa00ff;
+    border-left: 4px solid #d1c4e9;
 }
 
 .chapter-item-new.dragging {
@@ -132,17 +131,43 @@
     transition: border-color 0.2s;
 }
 
-.input-retro.subtitle-input:focus {
-    border-bottom-color: var(--gold);
-}
-
-.header-actions {
+.header-actions-row {
     display: flex;
-    justify-content: flex-end;
-    /* Align buttons to right */
-    gap: 8px;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
+    margin-top: 5px;
+}
+
+.actions-left,
+.actions-center,
+.actions-right {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+/* Ensure buttons are consistent size */
+.editor-area-header .btn-retro {
+    padding: 4px 12px;
+    font-size: 0.9rem;
+    height: 32px;
+    /* Fixed height for uniformity */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Green Save Button */
+.btn-retro.save {
+    background-color: #2e7d32;
+    /* Green */
+    border-color: #4caf50;
+    color: white;
+}
+
+.btn-retro.save:hover {
+    background-color: #388e3c;
 }
 
 .editor-area-body {
