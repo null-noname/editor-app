@@ -57,6 +57,12 @@ export const EditorUI = {
                     this.insertDash();
                 }
             });
+
+            // Preview Buttons
+            const btnPreview = document.getElementById('btn-preview');
+            if (btnPreview) {
+                btnPreview.addEventListener('click', () => this.openPreview());
+            }
         }
     },
 
@@ -152,6 +158,42 @@ export const EditorUI = {
 
         this.updateCounts();
         this.updateChapterData();
+        this.updateCounts();
+        this.updateChapterData();
+    },
+
+    openPreview() {
+        const modal = document.getElementById('preview-modal');
+        const body = document.getElementById('preview-body');
+        if (!modal || !body) return;
+
+        // Get content and format checks (Ruby conversion)
+        let content = this.editor ? this.editor.value : "";
+
+        // Escape HTML first
+        content = content.replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+
+        // Convert Ruby syntax: ｜漢字《かんじ》 -> <ruby>漢字<rt>かんじ</rt></ruby>
+        // Regex: ｜(NotMarkers)《(NotMarkers)》
+        content = content.replace(/｜([^｜《》]+?)《(.+?)》/g, '<ruby>$1<rt>$2</rt></ruby>');
+
+        body.innerHTML = content;
+
+        // Apply vertical mode if editor has it
+        if (this.editor && this.editor.classList.contains('vertical')) {
+            body.classList.add('vertical');
+        } else {
+            body.classList.remove('vertical');
+        }
+
+        modal.classList.remove('hidden');
+    },
+
+    closePreview() {
+        const modal = document.getElementById('preview-modal');
+        if (modal) modal.classList.add('hidden');
     }
 };
 
@@ -164,3 +206,4 @@ window.saveCurrentChapter = () => {
 // Re-export specific functions if needed by legacy
 window.insertRuby = () => EditorUI.insertRuby();
 window.insertDash = () => EditorUI.insertDash();
+window.closePreview = () => EditorUI.closePreview();

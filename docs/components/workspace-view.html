@@ -41,6 +41,7 @@
                             <button class="btn-retro" id="btn-export" title="エクスポート">📤</button>
                             <button class="btn-retro" id="btn-display-settings" title="表示設定">⚙</button>
                             <button class="btn-retro" onclick="toggleVerticalMode()">縦/横</button>
+                            <button class="btn-retro" id="btn-preview" title="プレビュー">📖</button>
                         </div>
                         <div class="actions-right">
                             <button class="btn-retro" onclick="insertRuby()">ルビ</button>
@@ -49,6 +50,19 @@
                             <button class="btn-retro btn-spacer-right" onclick="document.execCommand('redo')"
                                 title="やり直し">▶</button>
                             <button class="btn-retro save" onclick="saveCurrentChapter()">保存</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preview Modal -->
+                <div id="preview-modal" class="modal-overlay hidden">
+                    <div class="modal-content large">
+                        <div class="modal-header">
+                            <h2>プレビュー</h2>
+                            <button class="btn-retro close-modal" onclick="closePreview()">閉じる</button>
+                        </div>
+                        <div id="preview-body" class="preview-layout">
+                            <!-- Content injected here -->
                         </div>
                     </div>
                 </div>
