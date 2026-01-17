@@ -12,7 +12,8 @@ import {
     serverTimestamp,
     getDoc,
     setDoc,
-    getDocs
+    getDocs,
+    increment
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 /**
@@ -95,11 +96,13 @@ export async function updateChapter(workId, chapterId, data) {
  * STATISTICS & HISTORY (統計・履歴)
  */
 
-export async function updateDailyProgress(uid, count) {
+export async function incrementDailyProgress(uid, amount) {
+    if (amount === 0) return;
     const today = new Date().toISOString().split('T')[0];
     const docRef = doc(db, "users", uid, "dailyProgress", today);
+    // Use setDoc with merge to ensure doc exists, but use increment for atomic update
     await setDoc(docRef, {
-        count: count,
+        count: increment(amount),
         date: today
     }, { merge: true });
 }

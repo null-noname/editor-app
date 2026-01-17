@@ -36,11 +36,13 @@
                     <input type="text" id="chapter-subtitle" class="input-retro subtitle-input"
                         placeholder="サブタイトル (例: 第1話 旅立ち)">
                     <div class="header-actions-row">
-                        <div class="actions-full-right">
+                        <div class="actions-left">
                             <button class="btn-retro" id="btn-history" title="履歴・バックアップ">🕒</button>
                             <button class="btn-retro" id="btn-export" title="エクスポート">📤</button>
                             <button class="btn-retro" id="btn-display-settings" title="表示設定">⚙</button>
-                            <button class="btn-retro btn-spacer-right" onclick="toggleVerticalMode()">縦/横</button>
+                            <button class="btn-retro" onclick="toggleVerticalMode()">縦/横</button>
+                        </div>
+                        <div class="actions-right">
                             <button class="btn-retro" onclick="insertRuby()">ルビ</button>
                             <button class="btn-retro btn-spacer-right" onclick="insertDash()">―</button>
                             <button class="btn-retro" onclick="document.execCommand('undo')" title="元に戻す">◀</button>

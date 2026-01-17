@@ -2,7 +2,7 @@
  * Chapter Management Logic (DB Integrated)
  */
 
-import { createChapter, updateChapter } from "../core/db.js";
+import { createChapter, updateChapter, incrementDailyProgress } from "../core/db.js";
 import { renderChapterList } from "./chapter-list.js";
 import { WordCounter } from "./word-count.js";
 
@@ -92,8 +92,41 @@ class ChapterManager {
     async updateCurrentChapter(data) {
         if (!this.workId || !this.currentChapterId) return;
 
+        const current = this.getCurrentChapter();
+        let delta = 0;
+
+        // Calculate progress if content is updated
+        if (current && typeof data.content === 'string') {
+            const oldPure = WordCounter.countPure(current.content || "");
+            const newPure = WordCounter.countPure(data.content);
+            delta = newPure - oldPure;
+        }
+
         try {
             await updateChapter(this.workId, this.currentChapterId, data);
+
+            // Update daily progress only if positive (writing more)
+            // or should we track deletions too? Nola tracks "Activity".
+            // Typically "Progress" implies forward movement, but net-change is more accurate for "Word Count".
+            // However, to match user request "Saving but not reflecting", we definitely need to send updates.
+            // Let's send net change (both pos and neg) so the daily total graph is accurate to the end-of-day state.
+            // But if user deletes 500 chars, showing "-500" for the day might be weird if they started at 0?
+            // Usually, negative progress is just 0 progress.
+            // Let's stick to positive increments for "Productivity" tracking if that's the goal?
+            // A "Writing Diary" usually tracks effort.
+            // Let's allow negative for now so "Total Written Today" represents net added to the story.
+            if (delta !== 0) {
+                // We need currentUser UID.
+                // Assuming auth is handled or we can get it from somewhere.
+                // db.js functions generally take uid.
+                // We don't have uid stored in manager explicitly.
+                // We can import auth.
+                const { auth } = await import("../core/config.js");
+                if (auth.currentUser) {
+                    await incrementDailyProgress(auth.currentUser.uid, delta);
+                }
+            }
+
         } catch (e) {
             console.error("Update failed", e);
             document.getElementById('save-status-msg').textContent = "保存失敗";

@@ -10,8 +10,13 @@ export const WordCounter = {
      */
     countPure(text) {
         if (!text) return 0;
-        // Remove all whitespace (space, tab, no-break space, etc.) and line breaks
-        return text.replace(/\s+/g, '').length;
+        // 1. Remove Ruby syntax: ｜Parent《Ruby》 -> Parent
+        // Matches "｜" followed by non-Ruby-markers, followed by "《" ... "》"
+        // We replace the whole block with group 1 (Parent)
+        let processed = text.replace(/｜([^｜《》]+?)《.+?》/g, '$1');
+
+        // 2. Remove all whitespace
+        return processed.replace(/\s+/g, '').length;
     },
 
     /**
@@ -21,8 +26,6 @@ export const WordCounter = {
      */
     countTotal(text) {
         if (!text) return 0;
-        // Depending on requirements, we might want to normalize newlines, 
-        // but length usually suffices.
         return text.length;
     }
 };

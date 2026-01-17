@@ -187,8 +187,10 @@
 }
 
 #main-editor {
+    flex: 1;
+    /* Stretch to fill available space */
     width: 100%;
-    height: 100%;
+    /* height: 100%; Removed fixed 100% to let flex handle it */
     background: #202020;
     color: #eee;
     font-family: var(--font-editor, sans-serif);
@@ -199,6 +201,8 @@
     resize: none;
     outline: none;
     box-sizing: border-box;
+    overflow-y: auto;
+    /* Scroll inside textarea (or parent div if vertical) */
 }
 
 /* Vertical Writing Mode */
@@ -220,6 +224,8 @@
     font-size: 0.85rem;
     color: #888;
     height: 30px;
+    flex-shrink: 0;
+    /* Prevent shrinking */
 }
 
 .footer-right {
@@ -406,6 +412,13 @@
     background-color: rgba(198, 40, 40, 0.3);
     color: #ef9a9a;
     text-decoration: line-through;
+}
+
+/* Memo Newline Fix */
+.memo-content-full,
+.line-clamp-5 {
+    white-space: pre-wrap;
+    word-break: break-word;
 }
 
 .modal-footer {
