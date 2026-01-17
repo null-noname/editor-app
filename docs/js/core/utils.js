@@ -1,5 +1,5 @@
 /**
- * 共通ユーティリティ (js/core/utils.js)
+ * 共通ユーティリティ (js/core/utils.js) - Updated
  * 画面に依存しない純粋なデータ処理ロジックを集計
  */
 
