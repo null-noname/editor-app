@@ -450,3 +450,12 @@
     overflow-x: auto;
     overflow-y: hidden;
 }
+
+/* Fix Work Info Meta Colors to match Plotter (White) */
+.work-meta-compact .gold-bold {
+    color: #fff !important;
+}
+
+.meta-item {
+    color: #fff !important;
+}
