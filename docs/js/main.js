@@ -11,7 +11,7 @@ import {
     saveHistoryBackup,
     getRecentDailyProgress
 } from "./core/db.js";
-import { setupEditor, setEditorContent, getEditorContent, toggleVerticalMode, insertRuby, insertDash } from "./editor.js";
+
 import { initStatsChart, updateStatsChart, updateFullStatsPeriod, aggregateStats, getTabLabel } from "./stats.js";
 import {
     switchView,

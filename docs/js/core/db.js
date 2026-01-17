@@ -73,20 +73,20 @@ export function subscribeChapters(workId, callback) {
     });
 }
 
-export async function createChapter(workId, order) {
+export async function createChapter(workId, order, initialContent = "") {
     const docRef = await addDoc(collection(db, "works", workId, "chapters"), {
         title: `第${order}話`,
-        content: "",
+        content: initialContent,
         order: order,
         updatedAt: serverTimestamp()
     });
     return docRef.id;
 }
 
-export async function updateChapter(workId, chapterId, content) {
+export async function updateChapter(workId, chapterId, data) {
     const docRef = doc(db, "works", workId, "chapters", chapterId);
     await updateDoc(docRef, {
-        content: content,
+        ...data,
         updatedAt: serverTimestamp()
     });
 }

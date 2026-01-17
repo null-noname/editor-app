@@ -8,25 +8,18 @@ import {
     saveHistoryBackup
 } from "../../core/db.js";
 import {
-    setupEditor,
-    setEditorContent,
-    getEditorContent,
-    toggleVerticalMode,
-    insertRuby,
-    insertDash
-} from "../../editor.js";
-import {
-    renderChapterList,
     switchView,
     views,
-    populateWorkForm,
     toggleElementVisibility,
     renderWorkInfo
 } from "../../ui.js";
-import { adjustFormLayout } from "../setup/setup.js";
-import { getAllWorks, setupDashBoard } from "../dashboard/dashboard.js";
+import { getAllWorks } from "../dashboard/dashboard.js";
 import { initMemoList, refreshMemoList } from "../memo/memo-list.js";
 import { initMemoEditor, setMemoWorkId } from "../memo/memo-editor.js";
+
+// New Modules
+import { EditorUI } from "../editor-ui.js";
+import { chapterManager } from "../chapter-manager.js";
 
 // Initialize Memo System
 initMemoList();
@@ -34,21 +27,22 @@ initMemoEditor();
 
 let chaptersUnsubscribe = null;
 let currentWorkId = null;
-let currentChapterId = null;
 
 /**
  * ワークスペースを開く
  */
 export async function openWork(id, tab = 'editor') {
     currentWorkId = id;
-    // URLハッシュの更新 (main.js経由でのルーティングを想定)
+    chapterManager.setWorkId(id);
+
+    // URLハッシュの更新
     const hash = `${views.workspace}?id=${id}${tab ? '&tab=' + tab : ''}`;
     if (window.location.hash !== '#' + hash) {
         window.location.hash = hash;
     }
 
     switchView(views.workspace, true);
-    setMemoWorkId(id); // Update Memo module with new Work ID
+    setMemoWorkId(id);
     setupWorkspace(id);
     switchWorkspaceTab(tab);
 }
@@ -66,7 +60,7 @@ export function switchWorkspaceTab(tab) {
 
     if (!tabEditor) return;
 
-    // URLハッシュの更新 (現在のタブを記憶させる)
+    // URLハッシュの更新
     const currentHash = window.location.hash;
     if (currentHash.includes(views.workspace)) {
         const params = new URLSearchParams(currentHash.split('?')[1] || '');
@@ -90,9 +84,7 @@ export function switchWorkspaceTab(tab) {
     } else if (tab === 'memo') {
         tabMemo.classList.add('active');
         contentMemo.classList.add('active');
-        // Refresh Memo List with new Logic
         refreshMemoList(currentWorkId);
-        // Ensure Editor is closed when entering tag
         if (window.plotter_closeMemoEditor) window.plotter_closeMemoEditor();
     }
 }
@@ -103,13 +95,11 @@ export function switchWorkspaceTab(tab) {
 export function closeWorkspace() {
     console.log("Closing workspace...");
     if (chaptersUnsubscribe) chaptersUnsubscribe();
-    if (chaptersUnsubscribe) chaptersUnsubscribe();
 
     const infoContainer = document.getElementById('ws-info-container');
-    const setupForm = document.querySelector('#setup-view .form-panel'); // 編集用フォーム
-    const infoPanel = document.querySelector('#info-view .form-panel');   // 閲覧用パネル
+    const setupForm = document.querySelector('#setup-view .form-panel');
+    const infoPanel = document.querySelector('#info-view .form-panel');
 
-    // 編集フォームの返却
     const setupContainer = document.querySelector('#setup-view .container-narrow');
     if (setupForm && setupContainer) {
         setupContainer.appendChild(setupForm);
@@ -117,20 +107,18 @@ export function closeWorkspace() {
         toggleElementVisibility('setup-view-header', true);
     }
 
-    // 閲覧パネルの返却
     const infoContainerNarrow = document.querySelector('#info-view .container-narrow');
     if (infoPanel && infoContainerNarrow) {
         infoContainerNarrow.appendChild(infoPanel);
         infoPanel.classList.remove('workspace-full-form');
     }
 
-    // 執筆画面内の器を空にする
     if (infoContainer) infoContainer.innerHTML = '';
 
     currentWorkId = null;
-    currentChapterId = null;
+    chapterManager.setWorkId(null);
+    chapterManager.setChapters([]); // Clear chunks
 
-    // TOPへ戻る (ハッシュを書き換えて main.js のルーティングを走らせる)
     window.location.hash = views.top;
 }
 
@@ -140,32 +128,28 @@ export function closeWorkspace() {
 function setupWorkspace(workId) {
     if (chaptersUnsubscribe) chaptersUnsubscribe();
 
+    // エディタUIの初期化 (Input Binding等)
+    EditorUI.init();
 
-    setupEditor(
-        () => { }, // OnInput
-        saveCurrentChapter
-    );
-
-    // Subscribe Chapters
-    chaptersUnsubscribe = subscribeChapters(workId, (chapters) => {
+    // DB購読開始
+    chaptersUnsubscribe = subscribeChapters(workId, async (chapters) => {
+        // Migration Check
         if (chapters.length === 0) {
-            console.log("No chapters found, creating first chapter...");
-            createChapter(workId, 1);
+            const works = getAllWorks();
+            const work = works.find(w => w.id === workId);
+            let initialContent = "";
+            if (work && work.content) {
+                initialContent = work.content;
+                console.log("Migrating legacy content...");
+            }
+            // Create Chapter 1 (Migration)
+            await createChapter(workId, 1, initialContent);
             return;
         }
-        renderChapterList(chapters, currentChapterId, (id, content) => {
-            currentChapterId = id;
-            setEditorContent(content);
-            renderChapterList(chapters, currentChapterId, null);
-        });
 
-        if (!currentChapterId) {
-            currentChapterId = chapters[0].id;
-            setEditorContent(chapters[0].content);
-        }
+        // Update Manager with new data
+        chapterManager.setChapters(chapters);
     });
-
-
 }
 
 
@@ -178,7 +162,6 @@ export async function toggleWorkInfoMode(mode) {
 
     if (!infoContainer || !infoView) return;
 
-    // パネルを探す
     const infoPanel = infoView.querySelector('.info-view-wrapper') || infoContainer.querySelector('.info-view-wrapper');
 
     if (infoPanel) {
@@ -198,26 +181,20 @@ export async function toggleWorkInfoMode(mode) {
 }
 
 /**
- * 現在のチャプターを保存
+ * Global calls delegated to modules
  */
 export async function saveCurrentChapter() {
-    if (currentWorkId && currentChapterId) {
-        const content = getEditorContent();
-        await updateChapter(currentWorkId, currentChapterId, content);
-        await saveHistoryBackup(currentWorkId, currentChapterId, content);
-    }
+    EditorUI.triggerAutoSave();
+}
+
+export async function addNewChapter() {
+    chapterManager.addChapter();
 }
 
 /**
- * 新規チャプター追加
+ * Editor features forwarded to EditorUI global exposure or implementation
  */
-export async function addNewChapter() {
-    if (currentWorkId) {
-        const nextOrder = document.querySelectorAll('.chapter-item').length + 1;
-        const newId = await createChapter(currentWorkId, nextOrder);
-        currentChapterId = newId;
-    }
-}
+export const toggleVerticalMode = () => EditorUI.toggleVertical();
+export const insertRuby = () => EditorUI.insertRuby();
+export const insertDash = () => EditorUI.insertDash();
 
-// エディタ便利機能の委譲
-export { toggleVerticalMode, insertRuby, insertDash };
