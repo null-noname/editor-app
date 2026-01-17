@@ -45,11 +45,13 @@
     flex-direction: column;
     transition: width 0.3s ease;
     resize: horizontal;
-    resize: horizontal;
     /* For resize handle */
     min-height: 0;
     height: 100%;
     /* User Request: Change to 100% to fill parent flex item */
+    /* Fill parent container */
+    overflow: hidden;
+    /* CRITICAL: Prevent panel itself from scrolling */
 }
 
 .editor-sidebar-panel.hidden {
@@ -143,6 +145,8 @@
     /* Prevent flex overflow */
     background-color: var(--bg-dark);
     min-height: 0;
+    overflow: hidden;
+    /* CRITICAL: Prevent main panel from scrolling */
 }
 
 .editor-area-header {
