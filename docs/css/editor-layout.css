@@ -45,10 +45,11 @@
     flex-direction: column;
     transition: width 0.3s ease;
     resize: horizontal;
+    resize: horizontal;
     /* For resize handle */
     min-height: 0;
-    height: 100vh;
-    /* User Request: Fixed height */
+    height: 100%;
+    /* User Request: Change to 100% to fill parent flex item */
 }
 
 .editor-sidebar-panel.hidden {
@@ -67,6 +68,8 @@
     align-items: center;
     color: #888;
     font-size: 0.9rem;
+    flex-shrink: 0;
+    /* Prevent shrinking */
 }
 
 .sidebar-top-metric .value {
@@ -77,6 +80,7 @@
 
 .sidebar-list-container {
     flex: 1;
+    /* Grow to fill space */
     overflow-y: auto;
     padding: 10px;
     min-height: 0;
@@ -87,6 +91,8 @@
     padding: 10px;
     background-color: #222;
     border-top: 1px solid #333;
+    flex-shrink: 0;
+    /* Prevent shrinking */
 }
 
 /* Chapter Item Styles */
@@ -130,7 +136,8 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
+    /* Change to 100% to fill parent */
     /* User Request */
     min-width: 0;
     /* Prevent flex overflow */
