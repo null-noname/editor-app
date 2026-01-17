@@ -133,18 +133,20 @@
 
 .header-actions-row {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
+    /* Align all to right */
     align-items: center;
     width: 100%;
     margin-top: 5px;
 }
 
-.actions-left,
-.actions-center,
-.actions-right {
+.actions-full-right {
     display: flex;
     gap: 8px;
     align-items: center;
+    flex-wrap: wrap;
+    /* Allow wrap on small screens */
+    justify-content: flex-end;
 }
 
 /* Ensure buttons are consistent size */
