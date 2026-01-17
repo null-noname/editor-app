@@ -158,14 +158,12 @@ export const EditorUI = {
 
         this.updateCounts();
         this.updateChapterData();
-        this.updateCounts();
-        this.updateChapterData();
     },
 
     openPreview() {
-        const modal = document.getElementById('preview-modal');
+        const previewContainer = document.getElementById('ws-content-preview');
         const body = document.getElementById('preview-body');
-        if (!modal || !body) return;
+        if (!previewContainer || !body) return;
 
         // Get content and format checks (Ruby conversion)
         let content = this.editor ? this.editor.value : "";
@@ -176,8 +174,10 @@ export const EditorUI = {
             .replace(/>/g, "&gt;");
 
         // Convert Ruby syntax: ｜漢字《かんじ》 -> <ruby>漢字<rt>かんじ</rt></ruby>
-        // Regex: ｜(NotMarkers)《(NotMarkers)》
         content = content.replace(/｜([^｜《》]+?)《(.+?)》/g, '<ruby>$1<rt>$2</rt></ruby>');
+
+        // Convert newlines to <br> if needed, but white-space: pre-wrap usually handles it.
+        // However, for pure HTML preview, simply setting innerHTML with pre-wrap CSS is enough.
 
         body.innerHTML = content;
 
@@ -188,12 +188,17 @@ export const EditorUI = {
             body.classList.remove('vertical');
         }
 
-        modal.classList.remove('hidden');
+        // Show Preview (Full Screen)
+        previewContainer.style.display = 'flex'; // override class hidden if needed, or toggle class
+        previewContainer.classList.remove('hidden');
     },
 
     closePreview() {
-        const modal = document.getElementById('preview-modal');
-        if (modal) modal.classList.add('hidden');
+        const previewContainer = document.getElementById('ws-content-preview');
+        if (previewContainer) {
+            previewContainer.classList.add('hidden');
+            previewContainer.style.display = 'none'; // Ensure hidden
+        }
     }
 };
 

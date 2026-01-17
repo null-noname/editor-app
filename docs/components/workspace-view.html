@@ -55,17 +55,7 @@
                 </div>
 
                 <!-- Preview Modal -->
-                <div id="preview-modal" class="modal-overlay hidden">
-                    <div class="modal-content large">
-                        <div class="modal-header">
-                            <h2>プレビュー</h2>
-                            <button class="btn-retro close-modal" onclick="closePreview()">閉じる</button>
-                        </div>
-                        <div id="preview-body" class="preview-layout">
-                            <!-- Content injected here -->
-                        </div>
-                    </div>
-                </div>
+                <!-- Preview Modal Removed -->
 
                 <!-- Settings Popover -->
                 <div id="display-settings-panel" class="settings-popover hidden">
@@ -188,6 +178,18 @@
                     <button class="btn-retro save big">保存</button>
                 </div>
             </div>
+        </div>
+    </div>
+    <!-- Full Screen Preview View -->
+    <div id="ws-content-preview" class="hidden"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; background: #202020; display: flex; flex-direction: column;">
+        <div class="preview-header"
+            style="background: #1a1a1a; padding: 10px 20px; border-bottom: 1px solid #333; display: flex; align-items: center;">
+            <button class="btn-retro" onclick="closePreview()">＜ 編集に戻る</button>
+            <span style="color: #888; margin-left: 20px; font-size: 0.9rem;">プレビューモード</span>
+        </div>
+        <div id="preview-body" class="preview-layout" style="flex: 1; padding: 40px; overflow-y: auto;">
+            <!-- Content injected here -->
         </div>
     </div>
 </div>
