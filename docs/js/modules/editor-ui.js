@@ -199,6 +199,13 @@ export const EditorUI = {
             previewContainer.classList.add('hidden');
             previewContainer.style.display = 'none'; // Ensure hidden
         }
+    },
+
+    togglePreviewVertical() {
+        const body = document.getElementById('preview-body');
+        if (body) {
+            body.classList.toggle('vertical');
+        }
     }
 };
 
@@ -212,3 +219,4 @@ window.saveCurrentChapter = () => {
 window.insertRuby = () => EditorUI.insertRuby();
 window.insertDash = () => EditorUI.insertDash();
 window.closePreview = () => EditorUI.closePreview();
+window.togglePreviewVertical = () => EditorUI.togglePreviewVertical();
