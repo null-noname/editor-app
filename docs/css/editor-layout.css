@@ -452,8 +452,12 @@
 }
 
 /* Fix Work Info Meta Colors to match Plotter (White) */
-.work-meta-compact .gold-bold {
+/* Fix Work Info Meta Colors to match Plotter (White) */
+.work-meta-compact .gold-bold,
+.card-retro .gold-bold,
+.card-retro label.gold-bold {
     color: #fff !important;
+    opacity: 0.8;
 }
 
 .meta-item {
