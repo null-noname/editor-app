@@ -160,6 +160,10 @@
     justify-content: center;
 }
 
+.btn-spacer-right {
+    margin-right: 15px;
+}
+
 /* Green Save Button */
 .btn-retro.save {
     background-color: #2e7d32;
