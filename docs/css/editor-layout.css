@@ -45,9 +45,10 @@
     flex-direction: column;
     transition: width 0.3s ease;
     resize: horizontal;
-    overflow: hidden;
     /* For resize handle */
     min-height: 0;
+    height: 100vh;
+    /* User Request: Fixed height */
 }
 
 .editor-sidebar-panel.hidden {
@@ -129,6 +130,8 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    height: 100vh;
+    /* User Request */
     min-width: 0;
     /* Prevent flex overflow */
     background-color: var(--bg-dark);
