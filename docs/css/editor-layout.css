@@ -20,6 +20,8 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    min-height: 0;
+    /* Important for nested flex scroll */
 }
 
 .editor-layout-container {
@@ -29,6 +31,7 @@
     /* Fill workspace-main */
     overflow: hidden;
     background-color: var(--bg-dark);
+    min-height: 0;
 }
 
 /* --- Left Sidebar --- */
@@ -44,6 +47,7 @@
     resize: horizontal;
     overflow: hidden;
     /* For resize handle */
+    min-height: 0;
 }
 
 .editor-sidebar-panel.hidden {
@@ -74,6 +78,8 @@
     flex: 1;
     overflow-y: auto;
     padding: 10px;
+    min-height: 0;
+    /* Allow shrinking */
 }
 
 .sidebar-footer-action {
@@ -126,6 +132,7 @@
     min-width: 0;
     /* Prevent flex overflow */
     background-color: var(--bg-dark);
+    min-height: 0;
 }
 
 .editor-area-header {
