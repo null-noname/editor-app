@@ -84,11 +84,13 @@
 }
 
 .chapter-item-new.active {
-    background: #2e7d32;
-    /* Green from user request context or consistent style */
-    border-color: #4caf50;
+    background: #d500f9;
+    /* Bright Purple */
+    background: linear-gradient(135deg, #e040fb, #d500f9);
+    border-color: #aa00ff;
     color: #fff;
     font-weight: bold;
+    border-left: 4px solid #aa00ff;
 }
 
 .chapter-item-new.dragging {
@@ -111,18 +113,21 @@
     background-color: #151515;
     border-bottom: 1px solid #333;
     display: flex;
-    align-items: center;
-    gap: 15px;
+    flex-direction: column;
+    /* Stack vertically */
+    gap: 10px;
+    /* Space between rows */
 }
 
 .input-retro.subtitle-input {
-    flex: 1;
+    width: 100%;
+    margin-right: 0;
     background: transparent;
     border: none;
     border-bottom: 1px solid #444;
     color: #fff;
     font-size: 1.1rem;
-    padding: 5px 0;
+    padding: 8px 0;
     outline: none;
     transition: border-color 0.2s;
 }
@@ -133,7 +138,11 @@
 
 .header-actions {
     display: flex;
+    justify-content: flex-end;
+    /* Align buttons to right */
     gap: 8px;
+    align-items: center;
+    width: 100%;
 }
 
 .editor-area-body {
@@ -197,25 +206,26 @@
     color: #444;
 }
 
-/* --- Responsive --- */
+/* Mobile / Responsive Adjustments */
 @media (max-width: 768px) {
     .editor-layout-container {
         flex-direction: column;
     }
 
+    /* Hide sidebar on mobile by default to show ONLY editor */
     .editor-sidebar-panel {
-        width: 100%;
-        max-width: none;
-        height: auto;
-        max-height: 200px;
-        resize: none;
-        border-right: none;
-        border-bottom: 1px solid #333;
+        display: none;
     }
 
-    .sidebar-list-container {
-        height: 150px;
-        /* Fixed height on mobile for scroll */
+    #ws-content-editor {
+        padding: 0;
+        /* Remove padding on mobile for full screen feel */
+    }
+
+    /* Ensure editor takes full width */
+    .editor-main-panel {
+        width: 100%;
+        border-right: none;
     }
 }
 
