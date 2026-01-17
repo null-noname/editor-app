@@ -3,6 +3,8 @@
  */
 
 import { escapeHtml } from "../core/utils.js";
+import { WordCounter } from "./word-count.js";
+
 // chapterManager is imported dynamically or via window to avoid circular dep if needed, 
 // but here we just need to trigger reorder on manager.
 // better to pass reorder callback. but let's assume usage of window.chapterManager for simple wiring for now
@@ -27,7 +29,7 @@ export function renderChapterList(chapters, activeId, onSelect) {
         item.dataset.index = index;
         item.dataset.id = chapter.id;
 
-        const pureCount = (chapter.content || "").replace(/\s+/g, '').length;
+        const pureCount = WordCounter.countPure(chapter.content || "");
 
         item.innerHTML = `
             <span class="title">${escapeHtml(chapter.title)}</span>
