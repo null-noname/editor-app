@@ -22,7 +22,9 @@ function createChart(ctx, count) {
                 data: [],
                 backgroundColor: '#3CB371', // 指定色
                 borderColor: '#3CB371',
-                borderWidth: 1
+                borderWidth: 1,
+                barPercentage: 0.6,
+                maxBarThickness: 40
             }]
         },
         options: {
