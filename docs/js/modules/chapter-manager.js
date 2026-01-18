@@ -100,9 +100,18 @@ class ChapterManager {
             const oldPure = WordCounter.countPure(current.content || "");
             const newPure = WordCounter.countPure(data.content);
             delta = newPure - oldPure;
+
+            // CRITICAL FIX: Update local state IMMEDIATELY to prevent double-counting
+            // caused by Firestore snapshot latency.
+            current.content = data.content;
+            if (data.title) current.title = data.title;
         }
 
         try {
+            // Update Firestore (Debouncing might be better, but user asked for immediate fix)
+            // Note: We are sending every keystroke to DB here? 
+            // editor-ui.js calls this on 'input'. That is too frequent for DB writes!
+            // But we must fix the logic first.
             await updateChapter(this.workId, this.currentChapterId, data);
 
             if (delta !== 0) {
@@ -114,8 +123,11 @@ class ChapterManager {
 
         } catch (e) {
             console.error("Update failed", e);
-            document.getElementById('save-status-msg').textContent = "保存失敗";
-            document.getElementById('save-status-msg').style.color = "red";
+            const statusEl = document.getElementById('save-status-msg');
+            if (statusEl) {
+                statusEl.textContent = "保存失敗";
+                statusEl.style.color = "red";
+            }
         }
     }
 

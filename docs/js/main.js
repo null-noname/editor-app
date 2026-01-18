@@ -72,9 +72,8 @@ async function init() {
     safeRegister('openWork', (id, tab = 'editor') => {
         window.location.hash = `${views.workspace}?id=${id}${tab ? '&tab=' + tab : ''}`;
     });
-    safeRegister('closeWorkspace', () => {
-        window.location.hash = views.top;
-    });
+    // closeWorkspace is registered with correct logic below (imported from workspace.js)
+
     safeRegister('showWorkInfo', (id) => {
         if (!id) return;
         window.location.hash = `${views.info}?id=${id}`;
@@ -85,6 +84,7 @@ async function init() {
 
     // 画面固有の機能登録
     safeRegister('openWork', openWork);
+    safeRegister('closeWorkspace', closeWorkspace);
     safeRegister('switchWorkspaceTab', switchWorkspaceTab);
     safeRegister('addNewChapter', addNewChapter);
     safeRegister('saveCurrentChapter', saveCurrentChapter);
