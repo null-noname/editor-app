@@ -676,26 +676,26 @@ body {
     display: none !important;
 }
 
-/* 860px以下でサイドバーを完全に消去 (ツールバー保護のための計算値) */
-@media screen and (max-width: 860px) {
+/* 820px以下でサイドバーを完全に強制的に消去 (ツールバー幅確保の限界値) */
+@media screen and (max-width: 820px) {
 
-    /* サイドバーのクラス名をすべて網羅して強制非表示 */
-    .editor-sidebar-panel,
-    [class*="sidebar"],
-    aside,
-    #chapter-sidebar {
+    /* サイドバーを完全に、かつ強制的に消す */
+    body .editor-sidebar-panel,
+    body aside,
+    body [class*="sidebar"],
+    body #chapter-sidebar {
         display: none !important;
         width: 0 !important;
         flex: 0 0 0 !important;
         visibility: hidden !important;
     }
 
-    /* メインエリア（エディタ）を横幅いっぱいに広げる */
-    .editor-main-panel,
-    main,
-    #editor-area {
-        width: 100% !important;
-        flex-grow: 1 !important;
+    /* 執筆エリアを画面いっぱいに広げる */
+    body .editor-main-panel,
+    body main,
+    body #editor-area {
+        width: 100vw !important;
+        flex: 1 1 100% !important;
         margin-left: 0 !important;
         border-left: none !important;
     }
