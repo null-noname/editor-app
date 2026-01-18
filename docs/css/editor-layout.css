@@ -588,3 +588,50 @@ body {
     /* Internal scroll if text overflows fixed height */
     display: block !important;
 }
+
+/* --- MEMO EDIT VIEW FULL WIDTH LAYOUT (User Requested) --- */
+/* Remove centering and card effects */
+#memo-edit-view .card-retro {
+    max-width: none !important;
+    width: 100% !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Expand View Container */
+#memo-edit-view {
+    width: 100% !important;
+    padding: 0 20px !important;
+    /* Match Editor Header Padding */
+}
+
+/* Full Width Inputs */
+#memo-edit-view input.input-retro,
+#memo-edit-view textarea.textarea-retro {
+    width: 100% !important;
+    background: transparent !important;
+    /* Blend with background */
+    border: 1px solid #333 !important;
+    /* Minimal border for visibility */
+    color: #eee !important;
+}
+
+/* Main Content Textarea */
+#memo-edit-view textarea.textarea-retro {
+    min-height: 60vh !important;
+    /* Ensure ample writing space */
+    font-size: 1.1rem !important;
+    /* Match Editor font size */
+    line-height: 1.8 !important;
+    padding: 20px !important;
+}
+
+/* Header Alignment */
+.memo-edit-header {
+    border-bottom: 1px solid #333;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
