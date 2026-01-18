@@ -152,15 +152,14 @@ body {
 .editor-main-panel {
     display: flex !important;
     flex-direction: column !important;
-    flex-grow: 1;
-    /* Take remaining width */
-    width: 0;
-    /* Fix for flex child width issue */
-    height: 100% !important;
+    flex: 1 !important;
     min-width: 0;
+    /* CRITICAL: Allows shrinking below content size without overflow */
+    height: 100% !important;
     background-color: var(--bg-dark);
     overflow: hidden !important;
-    /* Internal scrolling only */
+    position: relative;
+    /* Ensure stacking context */
 }
 
 .editor-area-header {
@@ -169,9 +168,11 @@ body {
     border-bottom: 1px solid #333;
     display: flex;
     flex-direction: column;
-    /* Stack vertically */
     gap: 10px;
-    /* Space between rows */
+    flex-shrink: 0 !important;
+    /* CRITICAL: Prevent header from collapsing */
+    z-index: 20;
+    /* Ensure above editor */
 }
 
 .input-retro.subtitle-input {
@@ -285,7 +286,7 @@ body {
     color: #888;
     height: 30px;
     flex-shrink: 0 !important;
-    /* Prevent shrinking */
+    z-index: 20;
 }
 
 .footer-right {
