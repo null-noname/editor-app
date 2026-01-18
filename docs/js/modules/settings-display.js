@@ -104,8 +104,17 @@ export const DisplaySettings = {
 
         const sidebar = document.getElementById('chapter-sidebar');
         if (sidebar) {
-            sidebar.style.display = this.settings.showSidebar ? '' : 'none';
-            // Empty string defaults to CSS file value (flex/block), none hides it.
+            // Remove inline style usage as requested by user
+            sidebar.style.display = '';
+
+            // Use class-based toggle corresponding to CSS
+            // If showSidebar is true, we DO NOT add the hidden class
+            // If showSidebar is false, we ADD the hidden class
+            if (this.settings.showSidebar) {
+                sidebar.classList.remove('is-sidebar-hidden');
+            } else {
+                sidebar.classList.add('is-sidebar-hidden');
+            }
         }
     }
 };

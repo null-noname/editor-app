@@ -671,13 +671,19 @@ body {
     margin-right: 8px;
 }
 
-/* 900px以下でサイドバーを完全に消去 */
-@media screen and (max-width: 900px) {
+/* サイドバーの設定による非表示制御（JSからクラス制御） */
+.editor-sidebar-panel.is-sidebar-hidden {
+    display: none !important;
+}
+
+/* 860px以下でサイドバーを完全に消去 (ツールバー保護のための計算値) */
+@media screen and (max-width: 860px) {
 
     /* サイドバーのクラス名をすべて網羅して強制非表示 */
     .editor-sidebar-panel,
     [class*="sidebar"],
-    aside {
+    aside,
+    #chapter-sidebar {
         display: none !important;
         width: 0 !important;
         flex: 0 0 0 !important;
@@ -686,9 +692,17 @@ body {
 
     /* メインエリア（エディタ）を横幅いっぱいに広げる */
     .editor-main-panel,
-    main {
+    main,
+    #editor-area {
         width: 100% !important;
         flex-grow: 1 !important;
         margin-left: 0 !important;
+        border-left: none !important;
+    }
+
+    /* ツールバーの崩れ防止 */
+    .editor-area-header {
+        padding: 10px 10px !important;
+        justify-content: space-between !important;
     }
 }
