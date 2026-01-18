@@ -7,6 +7,7 @@ import { WordCounter } from "./word-count.js";
 import { DisplaySettings } from "./settings-display.js";
 import { HistoryManager } from "./history.js";
 import { ExportManager } from "./export-manager.js";
+import { showToast } from "../ui.js";
 
 // chapterManager is accessed via window.chapterManager or event
 
@@ -113,11 +114,16 @@ export const EditorUI = {
     },
 
     showSavedStatus() {
+        showToast("保存しました");
+        // Maintain text update for footer visibility as well, or remove it?
+        // User asked for "notification only", implies simpler UI. 
+        // But keeping footer text is harmless and good backup.
         if (this.saveStatusEl) {
             this.saveStatusEl.textContent = "保存済み";
             this.saveStatusEl.style.color = "#4caf50";
             setTimeout(() => {
-                this.saveStatusEl.style.color = ""; // reset
+                this.saveStatusEl.textContent = ""; // clear text
+                this.saveStatusEl.style.color = "";
             }, 2000);
         }
     },

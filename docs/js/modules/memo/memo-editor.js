@@ -5,6 +5,7 @@
 import { db } from '../../core/config.js';
 import { collection, doc, getDoc, getDocs, addDoc, updateDoc, deleteDoc, writeBatch, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { escapeHtml, autoResizeTextarea } from '../../core/utils.js';
+import { showToast } from '../../ui.js';
 
 let currentMemoId = null;
 let currentWorkId = null;
@@ -160,10 +161,11 @@ export async function saveMemo() {
             await addDoc(memosCol, data);
         }
         // Save success -> Close
+        showToast("メモを保存しました");
         closeMemoEditor();
     } catch (error) {
         console.error('[MemoEditor] 保存エラー:', error);
-        alert("保存に失敗しました");
+        showToast("保存に失敗しました", "error");
     }
 }
 

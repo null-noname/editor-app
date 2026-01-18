@@ -351,4 +351,36 @@ export function populateWorkForm(work) {
     if (countDisp) countDisp.textContent = `残${35 - (work.catchphrase || "").length}字`;
 }
 
+/**
+ * Toast Notification
+ * @param {string} message 
+ * @param {string} type 'success' | 'error' | 'info'
+ */
+export function showToast(message, type = 'success') {
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.textContent = message;
+
+    container.appendChild(toast);
+
+    // Animation
+    requestAnimationFrame(() => {
+        toast.classList.add('show');
+    });
+
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            if (toast.parentElement) toast.parentElement.removeChild(toast);
+        }, 300);
+    }, 3000);
+}
+
 

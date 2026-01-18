@@ -9,7 +9,8 @@ import {
     clearWorkForm,
     populateWorkForm,
     getWorkFormData,
-    toggleElementVisibility
+    toggleElementVisibility,
+    showToast
 } from "../../ui.js";
 
 let currentWorkId = null;
@@ -90,7 +91,7 @@ export function adjustFormLayout(id = null) {
 export async function handleWorkInfoSubmit() {
     const formData = getWorkFormData();
     if (!formData.title) {
-        alert("タイトルを入力してください");
+        showToast("タイトルを入力してください", "error");
         return;
     }
 
@@ -114,6 +115,8 @@ export async function handleWorkInfoSubmit() {
         }
 
         // 保存完了後の表示切り替え
+        showToast("作品情報を保存しました");
+
         const workspaceView = document.getElementById('workspace-view');
         const isInWorkspace = workspaceView && !workspaceView.classList.contains('hidden');
 
@@ -132,7 +135,7 @@ export async function handleWorkInfoSubmit() {
         }
     } catch (error) {
         console.error("作品情報の保存に失敗しました:", error);
-        alert("保存中にエラーが発生しました。");
+        showToast("保存中にエラーが発生しました", "error");
     }
 }
 
