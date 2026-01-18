@@ -306,25 +306,25 @@ body {
 }
 
 /* Mobile / Responsive Adjustments */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .editor-layout-container {
-        flex-direction: column;
+        flex-direction: column !important;
     }
 
     /* Hide sidebar on mobile by default to show ONLY editor */
     .editor-sidebar-panel {
-        display: none;
+        display: none !important;
     }
 
     #ws-content-editor {
-        padding: 0;
+        padding: 0 !important;
         /* Remove padding on mobile for full screen feel */
     }
 
     /* Ensure editor takes full width */
     .editor-main-panel {
-        width: 100%;
-        border-right: none;
+        width: 100% !important;
+        border-right: none !important;
     }
 }
 
@@ -669,4 +669,26 @@ body {
     text-overflow: ellipsis;
     white-space: nowrap;
     margin-right: 8px;
+}
+
+/* 900px以下でサイドバーを完全に消去 */
+@media screen and (max-width: 900px) {
+
+    /* サイドバーのクラス名をすべて網羅して強制非表示 */
+    .editor-sidebar-panel,
+    [class*="sidebar"],
+    aside {
+        display: none !important;
+        width: 0 !important;
+        flex: 0 0 0 !important;
+        visibility: hidden !important;
+    }
+
+    /* メインエリア（エディタ）を横幅いっぱいに広げる */
+    .editor-main-panel,
+    main {
+        width: 100% !important;
+        flex-grow: 1 !important;
+        margin-left: 0 !important;
+    }
 }
