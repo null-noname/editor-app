@@ -92,6 +92,10 @@ export async function updateChapter(workId, chapterId, data) {
     });
 }
 
+export async function deleteChapter(workId, chapterId) {
+    await deleteDoc(doc(db, "works", workId, "chapters", chapterId));
+}
+
 /**
  * STATISTICS & HISTORY (統計・履歴)
  */

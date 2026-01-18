@@ -10,7 +10,7 @@ import { WordCounter } from "./word-count.js";
 // better to pass reorder callback. but let's assume usage of window.chapterManager for simple wiring for now
 // or better, init interaction in main.
 
-export function renderChapterList(chapters, activeId, onSelect) {
+export function renderChapterList(chapters, activeId, onSelect, isDeleteMode = false) {
     const container = document.getElementById('chapter-list-container');
     if (!container) return;
 
@@ -25,21 +25,36 @@ export function renderChapterList(chapters, activeId, onSelect) {
         const item = document.createElement('div');
         item.className = 'chapter-item-new';
         if (chapter.id === activeId) item.classList.add('active');
-        item.draggable = true;
+
+        // Disable drag in delete mode to prevent accidents
+        if (!isDeleteMode) {
+            item.draggable = true;
+            addDragEvents(item);
+        } else {
+            item.draggable = false;
+        }
+
         item.dataset.index = index;
         item.dataset.id = chapter.id;
 
         const pureCount = WordCounter.countPure(chapter.content || "");
 
+        // Delete Button HTML
+        const deleteBtnHtml = isDeleteMode
+            ? `<button class="btn-icon-delete" title="削除" onclick="event.stopPropagation(); window.chapterManager.deleteChapter('${chapter.id}')">×</button>`
+            : '';
+
         item.innerHTML = `
-            <span class="title">${escapeHtml(chapter.title)}</span>
-            <span class="count">${pureCount}</span>
+            <div style="flex:1; display:flex; justify-content:space-between; align-items:center;">
+                <span class="title">${escapeHtml(chapter.title)}</span>
+                <span class="count">${pureCount}</span>
+            </div>
+            ${deleteBtnHtml}
         `;
 
-        item.onclick = () => onSelect(chapter.id);
-
-        // Drag Events
-        addDragEvents(item);
+        item.onclick = () => {
+            if (!isDeleteMode) onSelect(chapter.id);
+        };
 
         container.appendChild(item);
     });

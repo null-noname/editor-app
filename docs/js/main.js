@@ -93,6 +93,7 @@ async function init() {
     safeRegister('insertDash', workspaceInsertDash);
     safeRegister('handleWorkInfoSubmit', handleWorkInfoSubmit);
     safeRegister('toggleWorkInfoMode', toggleWorkInfoMode);
+    safeRegister('toggleChapterDeleteMode', () => chapterManager.toggleDeleteMode());
 
     window.updateFullStats = (period) => {
         const stats = getAllStatsCache();

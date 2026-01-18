@@ -646,3 +646,27 @@ body {
     margin-bottom: 20px;
     padding-bottom: 10px;
 }
+
+/* --- CHAPTER DELETE LIST BUTTONS --- */
+.btn-icon-delete {
+    background: transparent;
+    border: none;
+    color: #888;
+    font-size: 1.2rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 5px;
+    transition: color 0.2s;
+}
+
+.btn-icon-delete:hover {
+    color: #ff4444;
+}
+
+.chapter-item-new .title {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 8px;
+}

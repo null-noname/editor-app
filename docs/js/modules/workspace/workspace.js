@@ -197,4 +197,5 @@ export async function addNewChapter() {
 export const toggleVerticalMode = () => EditorUI.toggleVertical();
 export const insertRuby = () => EditorUI.insertRuby();
 export const insertDash = () => EditorUI.insertDash();
+export const toggleChapterDeleteMode = () => chapterManager.toggleDeleteMode();
 

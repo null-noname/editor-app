@@ -2,7 +2,7 @@
  * Chapter Management Logic (DB Integrated)
  */
 
-import { createChapter, updateChapter, incrementDailyProgress } from "../core/db.js";
+import { createChapter, updateChapter, incrementDailyProgress, deleteChapter } from "../core/db.js";
 import { renderChapterList } from "./chapter-list.js";
 import { WordCounter } from "./word-count.js";
 
@@ -105,22 +105,7 @@ class ChapterManager {
         try {
             await updateChapter(this.workId, this.currentChapterId, data);
 
-            // Update daily progress only if positive (writing more)
-            // or should we track deletions too? Nola tracks "Activity".
-            // Typically "Progress" implies forward movement, but net-change is more accurate for "Word Count".
-            // However, to match user request "Saving but not reflecting", we definitely need to send updates.
-            // Let's send net change (both pos and neg) so the daily total graph is accurate to the end-of-day state.
-            // But if user deletes 500 chars, showing "-500" for the day might be weird if they started at 0?
-            // Usually, negative progress is just 0 progress.
-            // Let's stick to positive increments for "Productivity" tracking if that's the goal?
-            // A "Writing Diary" usually tracks effort.
-            // Let's allow negative for now so "Total Written Today" represents net added to the story.
             if (delta !== 0) {
-                // We need currentUser UID.
-                // Assuming auth is handled or we can get it from somewhere.
-                // db.js functions generally take uid.
-                // We don't have uid stored in manager explicitly.
-                // We can import auth.
                 const { auth } = await import("../core/config.js");
                 if (auth.currentUser) {
                     await incrementDailyProgress(auth.currentUser.uid, delta);
@@ -131,6 +116,32 @@ class ChapterManager {
             console.error("Update failed", e);
             document.getElementById('save-status-msg').textContent = "保存失敗";
             document.getElementById('save-status-msg').style.color = "red";
+        }
+    }
+
+    /**
+     * Delete Mode Logic
+     */
+    toggleDeleteMode() {
+        this.isDeleteMode = !this.isDeleteMode;
+        this._render();
+        return this.isDeleteMode;
+    }
+
+    async deleteChapter(chapterId) {
+        if (!confirm("本当にこの話を削除しますか？\n※削除後は元に戻せません。")) return;
+
+        try {
+            await deleteChapter(this.workId, chapterId);
+            // If current chapter was deleted, clear selection or logic handled by onSnapshot
+            if (this.currentChapterId === chapterId) {
+                this.currentChapterId = null;
+                // Clearing editor content visually might be needed, 
+                // but usually handled by openWork/renders
+            }
+        } catch (e) {
+            console.error("Failed to delete chapter", e);
+            alert("削除に失敗しました。");
         }
     }
 
@@ -159,7 +170,7 @@ class ChapterManager {
     }
 
     _render() {
-        renderChapterList(this.chapters, this.currentChapterId, (id) => this.selectChapter(id));
+        renderChapterList(this.chapters, this.currentChapterId, (id) => this.selectChapter(id), this.isDeleteMode);
         this._updateTotalCount();
     }
 
