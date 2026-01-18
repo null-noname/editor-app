@@ -45,16 +45,8 @@ body {
     margin: 0;
 }
 
-/* Hide scrollbars completely (Matches Plotter) */
-::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
-}
-
-* {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
+/* Hide scrollbars completely (Matches Plotter) - REMOVED */
+/* Default scrollbar rendering allowed */
 
 /* --- Utilities --- */
 .hidden {
