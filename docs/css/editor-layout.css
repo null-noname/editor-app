@@ -28,6 +28,11 @@ body {
     background: #000;
 }
 
+/* Fix for switchView: Ensure hidden class overrides the ID !important */
+#workspace-view.hidden {
+    display: none !important;
+}
+
 .workspace-header {
     flex-shrink: 0;
     width: 100%;
