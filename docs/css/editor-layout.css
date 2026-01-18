@@ -15,6 +15,22 @@ body {
     display: block !important;
 }
 
+/* Allow scrolling for generic views (Stats, Dashboard, Memo List) */
+.view-content {
+    width: 100vw !important;
+    height: 100vh !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    position: absolute;
+    /* Stack them */
+    top: 0;
+    left: 0;
+    padding-bottom: 50px;
+    /* Ensure bottom content is reachable */
+}
+
+/* Workspace manages its own scroll, so disable wrapper scroll */
 #workspace-view {
     display: flex !important;
     flex-direction: column !important;
