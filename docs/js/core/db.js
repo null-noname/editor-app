@@ -81,6 +81,21 @@ export async function createChapter(workId, order, initialContent = "") {
         order: order,
         updatedAt: serverTimestamp()
     });
+
+    // Record initial stats
+    if (initialContent) {
+        // We need WordCounter. But cyclic dependency?
+        // Ideally pass count or compute here.
+        // Let's rely on simple length or import WordCounter if possible.
+        // Since db.js is core, let's inject check or dynamic import?
+        // Actually best to do it in chapter-manager which calls this?
+        // But user wants "createChapter" (low level) to handle it?
+        // Let's compute pure count here simply or update import.
+        const pureCount = initialContent.replace(/\s+/g, '').replace(/｜([^｜《》]+?)《.+?》/g, '$1').length;
+        if (pureCount > 0 && auth.currentUser) {
+            await incrementDailyProgress(auth.currentUser.uid, pureCount);
+        }
+    }
     return docRef.id;
 }
 
