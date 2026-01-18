@@ -199,3 +199,7 @@ export const insertRuby = () => EditorUI.insertRuby();
 export const insertDash = () => EditorUI.insertDash();
 export const toggleChapterDeleteMode = () => chapterManager.toggleDeleteMode();
 
+// Fallback: Manually register critical navigation functions to window avoid import timing issues
+window.closeWorkspace = closeWorkspace;
+window.openWork = openWork;
+
