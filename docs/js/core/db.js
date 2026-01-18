@@ -102,7 +102,15 @@ export async function deleteChapter(workId, chapterId) {
 
 export async function incrementDailyProgress(uid, amount) {
     if (amount === 0) return;
-    const today = new Date().toISOString().split('T')[0];
+    console.log(`[Stats] Incrementing progress for ${uid}: +${amount}`);
+
+    // Fix: Use local date for consistency with user's perspective
+    const d = new Date();
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    const today = `${year}-${month}-${day}`; // Local YYYY-MM-DD
+
     const docRef = doc(db, "users", uid, "dailyProgress", today);
     // Use setDoc with merge to ensure doc exists, but use increment for atomic update
     await setDoc(docRef, {

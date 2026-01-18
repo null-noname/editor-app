@@ -63,7 +63,13 @@ function updateChartData(chart, data) {
 }
 
 export function aggregateStats(stats) {
-    const todayStr = new Date().toISOString().split('T')[0];
+    // Fix: Use local date
+    const d = new Date();
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    const todayStr = `${year}-${month}-${day}`;
+
     const todayStat = stats.find(s => s.date === todayStr);
     const todayCount = todayStat ? todayStat.count : 0;
     const weeklySum = stats.slice(-7).reduce((acc, s) => acc + s.count, 0);
