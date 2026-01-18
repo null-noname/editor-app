@@ -133,6 +133,7 @@ function setupWorkspace(workId) {
     EditorUI.init();
 
     // DB購読開始
+    // DB購読開始
     chaptersUnsubscribe = subscribeChapters(workId, async (chapters) => {
         // Migration Check
         if (chapters.length === 0) {
@@ -141,10 +142,14 @@ function setupWorkspace(workId) {
             let initialContent = "";
             if (work && work.content) {
                 initialContent = work.content;
-                console.log("Migrating legacy content...");
             }
             // Create Chapter 1 (Migration)
-            await createChapter(workId, 1, initialContent);
+            try {
+                await createChapter(workId, 1, initialContent);
+            } catch (e) {
+                // If migration fails, user is stuck. 
+                // Maybe manually push a temp chapter so UI isn't broken?
+            }
             return;
         }
 

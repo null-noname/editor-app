@@ -1,4 +1,4 @@
-import { db } from "./config.js"; // Core DB Config
+import { db, auth } from "./config.js"; // Core DB Config
 import {
     collection,
     doc,
