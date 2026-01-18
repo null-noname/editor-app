@@ -524,41 +524,47 @@ body {
 }
 
 /* --- FORCE SCROLLBAR VISIBILITY & DRAGGABLE (Override base.css) --- */
-html,
-body,
 * {
     scrollbar-width: auto !important;
-    /* Firefox */
-    -ms-overflow-style: auto !important;
-    /* IE/Edge */
+    /* Firefox: Restore standard width */
 }
 
-/* Chrome, Safari, Edge */
+/* Chrome, Edge, Safari Settings */
 ::-webkit-scrollbar {
+    width: 16px !important;
+    /* 16px width for easy grabbing */
+    height: 16px !important;
     display: block !important;
-    width: 12px !important;
-    /* Clickable width */
-    height: 12px !important;
 }
 
+/* Scrollbar Track (Background) */
 ::-webkit-scrollbar-track {
-    background: #2a2a2a !important;
-    /* Visual track */
-    border-left: 1px solid #222 !important;
+    background: #1e1e1e !important;
+    /* Dark background to match theme */
+    border-left: 1px solid #333 !important;
+    /* Subtle border */
 }
 
+/* Scrollbar Thumb (Draggable handle) */
 ::-webkit-scrollbar-thumb {
-    background: #555 !important;
-    /* Draggable thumb */
-    border-radius: 6px !important;
+    background-color: #4a4a4a !important;
+    /* Default: slightly lighter than bg */
+    border-radius: 8px !important;
     /* Rounded corners */
-    border: 2px solid #2a2a2a !important;
-    /* Padding effect */
+    border: 3px solid #1e1e1e !important;
+    /* Create padding/floating effect */
 }
 
+/* Thumb Hover State */
 ::-webkit-scrollbar-thumb:hover {
-    background: #777 !important;
-    /* Hover feedback */
+    background-color: #666 !important;
+    /* Brighter on hover */
+}
+
+/* Thumb Active State (While dragging) */
+::-webkit-scrollbar-thumb:active {
+    background-color: #888 !important;
+    /* Brightest when active */
 }
 
 /* --- SIDEBAR LIST SCROLLING --- */
