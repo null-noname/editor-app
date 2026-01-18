@@ -606,6 +606,12 @@ body {
     width: 100% !important;
     padding: 0 20px !important;
     /* Match Editor Header Padding */
+    height: 100vh !important;
+    overflow-y: auto !important;
+    /* Force scroll */
+    display: flex !important;
+    flex-direction: column !important;
+    -webkit-overflow-scrolling: touch;
 }
 
 /* Full Width Inputs */
@@ -621,12 +627,17 @@ body {
 
 /* Main Content Textarea */
 #memo-edit-view textarea.textarea-retro {
+    height: auto !important;
+    /* Expand with content */
     min-height: 60vh !important;
     /* Ensure ample writing space */
     font-size: 1.1rem !important;
     /* Match Editor font size */
     line-height: 1.8 !important;
     padding: 20px !important;
+    overflow: visible !important;
+    /* Let container scroll */
+    resize: none !important;
 }
 
 /* Header Alignment */
