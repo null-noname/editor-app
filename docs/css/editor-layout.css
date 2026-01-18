@@ -703,7 +703,9 @@ body {
         flex: 1 1 100% !important;
         margin: 0 !important;
         padding: 0 !important;
-        display: block !important;
+        display: flex !important;
+        /* CRITICAL: Keep flex for internal height calculation */
+        flex-direction: column !important;
         min-width: 0 !important;
         /* コンテンツによる幅の固定を解除 */
     }

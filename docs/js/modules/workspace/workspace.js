@@ -11,7 +11,8 @@ import {
     switchView,
     views,
     toggleElementVisibility,
-    renderWorkInfo
+    renderWorkInfo,
+    showToast
 } from "../../ui.js";
 import { getAllWorks } from "../dashboard/dashboard.js";
 import { initMemoList, refreshMemoList } from "../memo/memo-list.js";
@@ -185,6 +186,7 @@ export async function toggleWorkInfoMode(mode) {
  */
 export async function saveCurrentChapter() {
     EditorUI.triggerAutoSave();
+    showToast("保存しました");
 }
 
 export async function addNewChapter() {
@@ -202,4 +204,5 @@ export const toggleChapterDeleteMode = () => chapterManager.toggleDeleteMode();
 // Fallback: Manually register critical navigation functions to window avoid import timing issues
 window.closeWorkspace = closeWorkspace;
 window.openWork = openWork;
+window.saveCurrentChapter = saveCurrentChapter;
 
