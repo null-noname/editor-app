@@ -3,26 +3,29 @@
 
 /* Full Viewport Layout Fix */
 /* Full Viewport Layout Fix */
+/* Full Viewport Layout Fix - FORCED OVERRIDE */
 html,
 body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+    width: 100vw !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
     /* Global scroll lock */
-    margin: 0;
-    padding: 0;
+    display: block !important;
 }
 
 #workspace-view {
-    display: flex;
-    flex-direction: column;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    position: fixed;
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    position: fixed !important;
     /* Force fix to viewport */
-    top: 0;
-    left: 0;
+    top: 0 !important;
+    left: 0 !important;
+    background: #000;
 }
 
 .workspace-header {
@@ -44,29 +47,25 @@ body {
 }
 
 .editor-layout-container {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+    display: flex !important;
+    flex-direction: row !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
     background-color: var(--bg-dark);
 }
 
 /* --- Left Sidebar --- */
 .editor-sidebar-panel {
+    width: 260px !important;
+    min-width: 260px !important;
+    height: 100% !important;
     display: flex !important;
     flex-direction: column !important;
-    width: 260px;
-    /* Fixed width */
-    min-width: 260px;
-    height: 100% !important;
-    /* Fill parent */
-    flex-shrink: 0;
-    /* Never shrink */
+    flex-shrink: 0 !important;
     background-color: #1a1a1a;
     border-right: 1px solid #333;
     overflow: hidden !important;
-    /* Internal scrolling only */
     z-index: 10;
 }
 
@@ -150,12 +149,13 @@ body {
 
 /* --- Right Main Panel --- */
 .editor-main-panel {
-    display: flex !important;
-    flex-direction: column !important;
-    flex: 1 !important;
-    min-width: 0;
-    /* CRITICAL: Allows shrinking below content size without overflow */
+    flex-grow: 1 !important;
+    /* Take remaining space */
     height: 100% !important;
+    display: flex !important;
+    /* Changed to flex to keep internal layout */
+    flex-direction: column !important;
+    min-width: 0 !important;
     background-color: var(--bg-dark);
     overflow: hidden !important;
     position: relative;
