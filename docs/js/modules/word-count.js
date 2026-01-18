@@ -26,9 +26,9 @@ export const WordCounter = {
      */
     countTotal(text) {
         if (!text) return 0;
-        // Fix: Exclude Ruby markers (｜, 《, 》) from total count to match Nola/Manuscript behavior
-        // Keeps the base text and the reading, just removes the syntax symbols.
-        // Difference 33 chars / 3 symbols = 11 rubies fit the user report perfectly.
-        return text.replace(/[｜《》]/g, '').length;
+        // Fix: Exclude Ruby readings and markers entirely (｜Base《Reading》 -> Base)
+        // This matches Nola's behavior where readings don't count towards the 'grid'.
+        let processed = text.replace(/｜([^｜《》]+?)《.+?》/g, '$1');
+        return processed.length;
     }
 };
