@@ -676,10 +676,10 @@ body {
     display: none !important;
 }
 
-/* 800px以下になった時だけサイドバーを消す（900pxでは消さない） */
-@media screen and (max-width: 800px) {
+/* 780px以下になった瞬間だけサイドバーを消し、エディタを全画面にする */
+@media screen and (max-width: 780px) {
 
-    /* サイドバーを強制的に消去 */
+    /* サイドバーを強制的に非表示 */
     body .editor-sidebar-panel,
     body aside,
     body [class*="sidebar"],
@@ -689,7 +689,7 @@ body {
         flex: 0 0 0 !important;
     }
 
-    /* エディタを画面横幅いっぱいに強制拡大 */
+    /* エディタを画面横幅いっぱいに強制拡大（黒い空白を消す） */
     body .editor-main-panel,
     body main,
     body #editor-area {
@@ -700,5 +700,12 @@ body {
         padding: 0 !important;
         display: block !important;
         min-width: 0 !important;
+        /* コンテンツによる幅の固定を解除 */
+    }
+
+    /* ツールバーの崩れ防止 */
+    .editor-area-header {
+        padding: 10px 10px !important;
+        justify-content: space-between !important;
     }
 }
